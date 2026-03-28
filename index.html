@@ -146,7 +146,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 <!-- ヘッダー -->
 
 <div class="bhdr">
-  <div class="bclub">FC KAMIFUKUOKA THUNDERS</div>
+  <div class="bclub" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
   <div class="bttl">MATCH BOARD</div>
   <div class="bdate">試合結果入力・試合結果表示</div>
   <div class="nav">
@@ -263,6 +263,11 @@ function applyTheme(key) {
   r.setProperty("--th-card",   t.card);
   r.setProperty("--th-line",   t.line);
   r.setProperty("--th-accent", t.accent);
+}
+
+function applyClubName(hdr) {
+  document.getElementById("hdr-club").textContent = hdr;
+  document.title = "MATCH BOARD | " + hdr;
 }
 var CATS = ["U12","U11","U10","U9","U8","U7","Girls"];
 var seq  = 0;
@@ -587,13 +592,15 @@ function loadClub() {
   document.getElementById("cfg-ftr").value = club.ftr;
   buildSwatches(club.theme);
   applyTheme(club.theme);
+  applyClubName(club.hdr);
 }
 
 function saveClub() {
   var hdr   = document.getElementById("cfg-hdr").value.trim() || DEF_HDR;
   var ftr   = document.getElementById("cfg-ftr").value.trim() || DEF_FTR;
-  var theme = document.getElementById("cfg-hdr").dataset.theme || DEF_THEME;
+  var theme = document.getElementById("cfg-hdr").dataset.theme || loadClubData().theme;
   try { localStorage.setItem(SK_CLUB, JSON.stringify({hdr:hdr, ftr:ftr, theme:theme})); } catch(e) {}
+  applyClubName(hdr);
 }
 
 function buildSwatches(current) {
