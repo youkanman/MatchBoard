@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MATCH BOARD | FC上福岡サンダース</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0a0e1a; --bg2:#151c2e;
+      --b1:rgba(255,255,255,0.08); --b2:rgba(255,255,255,0.12);
+      --t1:#e8eaf0; --t2:#90caf9; --t3:#78909c; --t4:#546e7a;
+      --bl:#0d47a1; --bl2:#1565c0; --bl3:#1976d2; --bl4:#64b5f6;
+      --win:#00e676; --lose:#ff5252; --draw:#ffab40; --dng:#ef9a9a;
+    }
+    body { background:var(--bg); color:var(--t1); font-family:'Barlow Condensed','Noto Sans JP',sans-serif; max-width:480px; margin:0 auto; min-height:100vh; }
+    button { font-family:inherit; cursor:pointer; }
+    input, select, textarea { font-family:inherit; }
+
+```
+/* ヘッダー */
+.hdr { background:linear-gradient(135deg,#1a237e 0%,var(--bl) 60%,var(--bl2) 100%); padding:20px 20px 16px; position:relative; overflow:hidden; }
+.hdr::before { content:''; position:absolute; top:-30px; right:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); pointer-events:none; }
+.club-lbl { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
+.app-ttl  { font-size:26px; font-weight:900; letter-spacing:1px; color:#fff; line-height:1; }
+.app-sub  { font-size:13px; color:var(--bl4); margin-top:4px; }
+.nav { display:flex; gap:8px; margin-top:14px; }
+.nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:12px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
+.nbtn.on { background:#fff; color:var(--bl); }
+
+/* 入力画面 */
+#vi { padding:20px 16px 100px; }
+.slbl { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--t4); text-transform:uppercase; margin-bottom:8px; display:block; }
+.flbl { font-size:11px; font-weight:700; letter-spacing:1px; color:var(--t4); margin-bottom:5px; display:block; }
+.opt  { font-size:10px; color:var(--t3); margin-left:4px; font-weight:400; letter-spacing:0; }
+.sec  { margin-bottom:18px; }
+.dvd  { height:1px; background:var(--b1); margin:4px 0 20px; }
+input[type=text], input[type=number], select {
+  width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--b2);
+  border-radius:10px; padding:10px 14px; color:var(--t1); font-size:14px; outline:none;
+}
+input[type=number] { -moz-appearance:textfield; }
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; }
+.cats { display:flex; gap:8px; flex-wrap:wrap; }
+.cbtn { padding:6px 16px; border-radius:20px; border:1px solid rgba(255,255,255,0.15); background:transparent; color:var(--t2); font-size:13px; font-weight:700; }
+.cbtn.on { background:var(--bl3); border-color:var(--bl3); color:#fff; }
+
+/* 試合カード（入力） */
+.mc   { background:rgba(255,255,255,0.04); border:1px solid var(--b1); border-radius:14px; padding:14px 14px 16px; margin-bottom:12px; }
+.mch  { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.mno  { font-size:11px; font-weight:800; letter-spacing:3px; color:var(--bl3); }
+.mchr { display:flex; gap:8px; align-items:center; }
+.fg   { margin-bottom:10px; }
+.sr   { display:flex; align-items:flex-end; gap:8px; }
+.sr > div { flex:1; }
+.ssep { font-size:24px; color:var(--t4); font-weight:700; padding-bottom:8px; line-height:1; }
+.sinp { font-size:22px !important; font-weight:800 !important; padding:10px 8px !important; text-align:center !important; }
+.tmbtn { padding:4px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:var(--t3); font-size:11px; font-weight:800; letter-spacing:1px; }
+.tmbtn.on { background:rgba(255,171,64,0.2); border-color:var(--draw); color:var(--draw); }
+.tmbdg { display:inline-block; margin-top:6px; font-size:12px; color:var(--draw); background:rgba(255,171,64,0.1); padding:4px 12px; border-radius:8px; }
+.rmbtn { background:rgba(255,82,82,0.1); border:none; border-radius:6px; color:var(--dng); padding:4px 8px; font-size:11px; }
+.addbtn { width:100%; background:rgba(25,118,210,0.1); border:1px dashed rgba(25,118,210,0.4); border-radius:10px; color:var(--bl4); padding:11px; font-size:13px; font-weight:700; margin-bottom:20px; }
+.arow { display:flex; gap:10px; }
+.clrbtn { flex:1; padding:12px; background:rgba(255,82,82,0.08); border:1px solid rgba(255,82,82,0.25); border-radius:12px; color:var(--dng); font-size:14px; font-weight:700; }
+.bdbtn  { flex:2; padding:12px; background:linear-gradient(135deg,var(--bl2),var(--bl)); border:none; border-radius:12px; color:#fff; font-size:14px; font-weight:800; letter-spacing:.5px; }
+
+/* ===== 掲示板オーバーレイ（入力画面の上に被せる） ===== */
+#vb {
+  display:none;
+  position:fixed; inset:0;
+  background:var(--bg);
+  overflow-y:auto;
+  z-index:10;
+  max-width:480px;
+  margin:0 auto;
+}
+.vb-inner { padding:16px 16px 80px; }
+.bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
+
+/* 掲示板カード */
+#bcard { background:linear-gradient(160deg,#0d1526 0%,#0a1020 100%); border:1px solid rgba(255,255,255,0.1); border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+.bhdr { background:linear-gradient(135deg,#1a237e,var(--bl)); padding:20px 20px 18px; position:relative; overflow:hidden; }
+.bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
+.bclub { font-size:10px; letter-spacing:4px; color:var(--t2); margin-bottom:6px; }
+.bttl  { font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:10px; word-break:break-all; }
+.bmeta { display:flex; align-items:center; gap:10px; }
+.bcat  { font-size:11px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:3px 10px; border-radius:6px; }
+.bdate { font-size:11px; color:var(--t2); letter-spacing:1px; }
+.brows { padding:12px 16px; }
+.brow  { display:flex; align-items:center; justify-content:space-between; padding:12px 4px; border-bottom:1px solid; gap:12px; }
+.blft  { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
+.bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; }
+.bmn   { font-size:11px; color:var(--t3); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.bopp  { font-size:15px; font-weight:700; color:var(--t1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.brgt  { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
+.bbdg  { font-size:10px; font-weight:800; letter-spacing:2px; padding:2px 8px; border-radius:5px; }
+.bscr  { font-size:28px; font-weight:900; letter-spacing:-1px; line-height:1; }
+.btm   { font-size:12px; font-weight:800; color:var(--draw); background:rgba(255,171,64,.12); padding:4px 10px; border-radius:6px; letter-spacing:1px; }
+.bftr  { padding:12px 20px 16px; }
+.bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:10px 14px; margin-bottom:14px; }
+.bmic  { font-size:14px; flex-shrink:0; margin-top:1px; }
+.bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
+.bline { height:1px; background:linear-gradient(90deg,var(--bl3),transparent); margin-bottom:10px; }
+.bbrnd { font-size:11px; color:var(--bl3); font-weight:800; letter-spacing:3px; }
+.savbtn { width:100%; margin-top:16px; padding:14px; background:linear-gradient(135deg,#1b5e20,#2e7d32); border:none; border-radius:14px; color:#fff; font-size:15px; font-weight:800; letter-spacing:1px; }
+.savbtn:disabled { opacity:.6; }
+.hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
+
+/* モーダル */
+.ovl { position:fixed; inset:0; background:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:100; }
+.mdl { background:var(--bg2); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:28px 24px; width:280px; text-align:center; }
+.mttl { font-size:18px; font-weight:800; margin-bottom:8px; }
+.msub { font-size:13px; color:var(--t3); margin-bottom:24px; }
+.mok  { width:100%; padding:12px; background:rgba(255,82,82,.15); border:1px solid rgba(255,82,82,.4); border-radius:10px; color:var(--lose); font-size:14px; font-weight:800; margin-bottom:8px; }
+.mcnl { width:100%; padding:11px; background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:10px; color:var(--t3); font-size:14px; }
+```
+
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+
+<div class="hdr">
+  <div class="club-lbl">FC Kamifukuoka Thunders</div>
+  <div class="app-ttl">MATCH BOARD</div>
+  <div class="app-sub">試合結果入力・掲示板</div>
+  <div class="nav">
+    <button class="nbtn on" id="bni" onclick="showInput()">✏️ 入力</button>
+    <button class="nbtn"    id="bnb" onclick="showBoard()">📋 掲示板</button>
+  </div>
+</div>
+
+<!-- 入力画面（常にDOMに存在） -->
+
+<div id="vi">
+  <div class="sec">
+    <label class="slbl">大会・イベント名</label>
+    <input type="text" id="ftitle" placeholder="例：2025春季リーグ第3節">
+  </div>
+  <div class="sec">
+    <label class="slbl">日付</label>
+    <input type="date" id="fdate">
+  </div>
+  <div class="sec">
+    <label class="slbl">カテゴリ</label>
+    <div class="cats" id="cats"></div>
+  </div>
+  <div class="dvd"></div>
+  <div id="mlist"></div>
+  <button class="addbtn" onclick="addMatch()">＋ 試合を追加</button>
+  <div class="sec">
+    <label class="slbl">感謝の一言 <span class="opt">（任意）</span></label>
+    <input type="text" id="fmsg" placeholder="例：応援ありがとうございました！">
+  </div>
+  <div class="arow">
+    <button class="clrbtn" onclick="confirmClear()">🗑 クリア</button>
+    <button class="bdbtn"  onclick="showBoard()">📋 掲示板を見る →</button>
+  </div>
+</div>
+
+<!-- 掲示板オーバーレイ（fixed で上に重ねる・入力画面はそのまま） -->
+
+<div id="vb">
+  <div class="vb-inner">
+    <button class="bkbtn" onclick="showInput()">← 入力に戻る</button>
+    <div id="bcard">
+      <div class="bhdr">
+        <div class="bclub">FC KAMIFUKUOKA THUNDERS</div>
+        <div class="bttl"  id="bttl">MATCH RESULT</div>
+        <div class="bmeta">
+          <span class="bcat"  id="bcat">U12</span>
+          <span class="bdate" id="bdate"></span>
+        </div>
+      </div>
+      <div class="brows" id="brows"></div>
+      <div class="bftr"  id="bftr"></div>
+    </div>
+    <button class="savbtn" id="savbtn" onclick="saveImage()">📸 画像を保存</button>
+    <div class="hint">カード部分のみ画像として保存されます</div>
+  </div>
+</div>
+
+<!-- クリア確認モーダル -->
+
+<div class="ovl" id="mdl" style="display:none;">
+  <div class="mdl">
+    <div class="mttl">クリアしますか？</div>
+    <div class="msub">入力した内容がすべて削除されます</div>
+    <button class="mok"  onclick="doClear()">クリアする</button>
+    <button class="mcnl" onclick="closeMdl()">キャンセル</button>
+  </div>
+</div>
+
+<script>
+// =============================================
+// 定数・状態
+// =============================================
+var SK   = "thunders_v4";
+var CATS = ["U12","U11","U10","U9","U8"];
+var seq  = 0;
+var category = "U12";
+
+// =============================================
+// 起動
+// =============================================
+window.onload = function() {
+  buildCats("U12");
+  load();
+};
+
+function setDate() {
+  var d = new Date();
+  document.getElementById("bdate").textContent =
+    d.getFullYear() + "." + pad(d.getMonth()+1) + "." + pad(d.getDate());
+}
+function pad(n) { return ("0"+n).slice(-2); }
+
+// =============================================
+// カテゴリ
+// =============================================
+function buildCats(selected) {
+  category = selected || "U12";
+  var html = "";
+  for (var i = 0; i < CATS.length; i++) {
+    var c = CATS[i];
+    html += '<button class="cbtn' + (c===category?" on":"") + '" onclick="setCategory(\'' + c + '\')">' + c + '</button>';
+  }
+  document.getElementById("cats").innerHTML = html;
+}
+
+function setCategory(c) {
+  category = c;
+  var btns = document.querySelectorAll(".cbtn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].className = "cbtn" + (btns[i].textContent===c?" on":"");
+  }
+  saveData();
+}
+
+// =============================================
+// 試合カード追加
+// =============================================
+function addMatch(data) {
+  seq++;
+  var id      = seq;
+  var name    = (data && data.name)      ? data.name      : "";
+  var opp     = (data && data.opponent)  ? data.opponent  : "";
+  var us      = (data && data.scoreUs   !== undefined) ? data.scoreUs   : "";
+  var them    = (data && data.scoreThem !== undefined) ? data.scoreThem : "";
+  var isTM    = (data && data.isTM)      ? true : false;
+
+  var div = document.createElement("div");
+  div.className = "mc";
+  div.id = "mc"+id;
+  div.innerHTML =
+    '<div class="mch">' +
+      '<span class="mno">MATCH <span id="mn'+id+'"></span></span>' +
+      '<div class="mchr">' +
+        '<button class="tmbtn'+(isTM?" on":"")+'" id="tm'+id+'" onclick="toggleTM('+id+')">TM</button>' +
+        '<button class="rmbtn" onclick="remMatch('+id+')">✕</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="fg">' +
+      '<label class="flbl">試合名・メモ <span class="opt">（任意）</span></label>' +
+      '<input type="text" id="na'+id+'" value="'+esc(name)+'" placeholder="試合名・メモ（任意）" oninput="saveData()">' +
+    '</div>' +
+    '<div class="fg">' +
+      '<label class="flbl">対戦相手</label>' +
+      '<input type="text" id="op'+id+'" value="'+esc(opp)+'" placeholder="対戦チーム名" oninput="saveData()">' +
+    '</div>' +
+    '<div id="sa'+id+'"'+(isTM?' style="display:none"':'')+'>'+
+      '<div class="sr">' +
+        '<div><label class="flbl">得点</label><input type="number" class="sinp" id="su'+id+'" value="'+esc(us)+'" placeholder="0" min="0" oninput="saveData()"></div>' +
+        '<div class="ssep">−</div>' +
+        '<div><label class="flbl">失点</label><input type="number" class="sinp" id="st'+id+'" value="'+esc(them)+'" placeholder="0" min="0" oninput="saveData()"></div>' +
+      '</div>' +
+    '</div>' +
+    '<div id="tb'+id+'"'+(!isTM?' style="display:none"':'')+'>'+
+      '<span class="tmbdg">⚽ トレーニングマッチ</span>' +
+    '</div>';
+
+  document.getElementById("mlist").appendChild(div);
+  renum();
+  saveData();
+}
+
+function toggleTM(id) {
+  var btn = document.getElementById("tm"+id);
+  var sa  = document.getElementById("sa"+id);
+  var tb  = document.getElementById("tb"+id);
+  var on  = btn.className.indexOf("on") < 0; // 現在onでなければtrue
+  btn.className = "tmbtn" + (on?" on":"");
+  sa.style.display = on ? "none" : "";
+  tb.style.display = on ? ""     : "none";
+  saveData();
+}
+
+function remMatch(id) {
+  var el = document.getElementById("mc"+id);
+  if (el) el.parentNode.removeChild(el);
+  renum();
+  saveData();
+}
+
+function renum() {
+  var cards = document.querySelectorAll(".mc");
+  for (var i = 0; i < cards.length; i++) {
+    var id = cards[i].id.replace("mc","");
+    var el = document.getElementById("mn"+id);
+    if (el) el.textContent = i+1;
+  }
+}
+
+// =============================================
+// ビュー切り替え（掲示板はfixedで上に重ねる）
+// =============================================
+function showBoard() {
+  renderBoard();
+  document.getElementById("vb").style.display = "block";
+  document.getElementById("bni").className = "nbtn";
+  document.getElementById("bnb").className = "nbtn on";
+  document.getElementById("vb").scrollTop = 0;
+}
+
+function showInput() {
+  document.getElementById("vb").style.display = "none";
+  document.getElementById("bni").className = "nbtn on";
+  document.getElementById("bnb").className = "nbtn";
+}
+
+// =============================================
+// 掲示板レンダリング（入力画面のDOMから直接読む）
+// =============================================
+function renderBoard() {
+  var title = document.getElementById("ftitle").value;
+  var msg   = document.getElementById("fmsg").value;
+  var fdate = document.getElementById("fdate").value;
+
+  // 日付を YYYY.MM.DD 形式に変換（入力なければ今日）
+  var dateStr = "";
+  if (fdate) {
+    var parts = fdate.split("-");
+    dateStr = parts[0] + "." + parts[1] + "." + parts[2];
+  } else {
+    var d = new Date();
+    dateStr = d.getFullYear() + "." + pad(d.getMonth()+1) + "." + pad(d.getDate());
+  }
+
+  document.getElementById("bttl").textContent  = title || "MATCH RESULT";
+  document.getElementById("bcat").textContent  = category;
+  document.getElementById("bdate").textContent = dateStr;
+
+  var cards = document.querySelectorAll(".mc");
+  var el    = document.getElementById("brows");
+
+  if (cards.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--t4);font-size:14px;">試合データがありません</div>';
+  } else {
+    var html = "";
+    for (var i = 0; i < cards.length; i++) {
+      var id   = cards[i].id.replace("mc","");
+      var name = document.getElementById("na"+id).value;
+      var opp  = document.getElementById("op"+id).value;
+      var suEl = document.getElementById("su"+id);
+      var stEl = document.getElementById("st"+id);
+      var tmOn = document.getElementById("tm"+id).className.indexOf("on") >= 0;
+      var su   = suEl ? suEl.value : "";
+      var st   = stEl ? stEl.value : "";
+
+      var r = null;
+      if (!tmOn && su !== "" && st !== "") {
+        var u = Number(su), t = Number(st);
+        r = u > t ? "WIN" : u < t ? "LOSE" : "DRAW";
+      }
+      var rc = r==="WIN"?"var(--win)":r==="LOSE"?"var(--lose)":r==="DRAW"?"var(--draw)":"var(--t2)";
+      var rb = r==="WIN"?"rgba(0,230,118,.12)":r==="LOSE"?"rgba(255,82,82,.12)":r==="DRAW"?"rgba(255,171,64,.12)":"rgba(144,202,249,.1)";
+      var bc = r==="WIN"?"rgba(0,230,118,.2)":r==="LOSE"?"rgba(255,82,82,.2)":r==="DRAW"?"rgba(255,171,64,.2)":"rgba(255,255,255,.07)";
+
+      var nameH = name ? '<div class="bmn">'+esc(name)+'</div>' : "";
+      var oppH  = opp  ? '<div class="bopp">'+esc("vs "+opp)+'</div>'
+                       : '<div class="bopp"><span style="color:var(--t4)">相手未入力</span></div>';
+      var rgtH  = tmOn
+        ? '<span class="btm">TM</span>'
+        : r
+          ? '<span class="bbdg" style="color:'+rc+';background:'+rb+'">'+r+'</span><span class="bscr" style="color:'+rc+'">'+esc(su)+'<span style="color:var(--t4);font-size:20px"> - </span>'+esc(st)+'</span>'
+          : '<span style="color:var(--t4);font-size:13px">未入力</span>';
+
+      html += '<div class="brow" style="border-color:'+bc+'">'+
+                '<div class="blft"><span class="bidx">'+(i+1)+'</span><div style="min-width:0">'+nameH+oppH+'</div></div>'+
+                '<div class="brgt">'+rgtH+'</div>'+
+              '</div>';
+    }
+    el.innerHTML = html;
+  }
+
+  document.getElementById("bftr").innerHTML =
+    (msg ? '<div class="bmsg"><span class="bmic">💬</span><span class="bmtx">'+esc(msg)+'</span></div>' : "") +
+    '<div class="bline"></div><div class="bbrnd">⚡ THUNDERS</div>';
+}
+
+// =============================================
+// 画像保存
+// =============================================
+async function saveImage() {
+  var btn = document.getElementById("savbtn");
+  btn.disabled = true; btn.textContent = "⏳ 生成中...";
+  try {
+    var canvas = await html2canvas(document.getElementById("bcard"), {
+      backgroundColor:"#0a1020", scale:2, useCORS:true, logging:false
+    });
+    canvas.toBlob(async function(blob) {
+      var file = new File([blob], "thunders_match.png", {type:"image/png"});
+      if (navigator.canShare && navigator.canShare({files:[file]})) {
+        await navigator.share({files:[file], title:"試合結果"});
+      } else {
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "thunders_match.png";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+    }, "image/png");
+  } catch(e) { alert("画像生成に失敗: "+e.message); }
+  btn.disabled = false; btn.textContent = "📸 画像を保存";
+}
+
+// =============================================
+// ローカルストレージ保存・読込
+// =============================================
+function saveData() {
+  var cards = document.querySelectorAll(".mc");
+  var matches = [];
+  for (var i = 0; i < cards.length; i++) {
+    var id = cards[i].id.replace("mc","");
+    var suEl = document.getElementById("su"+id);
+    var stEl = document.getElementById("st"+id);
+    matches.push({
+      name:      document.getElementById("na"+id).value,
+      opponent:  document.getElementById("op"+id).value,
+      scoreUs:   suEl ? suEl.value : "",
+      scoreThem: stEl ? stEl.value : "",
+      isTM:      document.getElementById("tm"+id).className.indexOf("on") >= 0,
+    });
+  }
+  var data = {
+    title:    document.getElementById("ftitle").value,
+    message:  document.getElementById("fmsg").value,
+    date:     document.getElementById("fdate").value,
+    category: category,
+    matches:  matches,
+  };
+  try { localStorage.setItem(SK, JSON.stringify(data)); } catch(e) {}
+}
+
+function load() {
+  try {
+    var raw = localStorage.getItem(SK);
+    if (!raw) { addMatch(); return; }
+    var d = JSON.parse(raw);
+    document.getElementById("ftitle").value = d.title   || "";
+    document.getElementById("fmsg").value   = d.message || "";
+    document.getElementById("fdate").value  = d.date    || "";
+    buildCats(d.category || "U12");
+    if (d.matches && d.matches.length > 0) {
+      for (var i = 0; i < d.matches.length; i++) addMatch(d.matches[i]);
+    } else {
+      addMatch();
+    }
+  } catch(e) { addMatch(); }
+}
+
+// =============================================
+// クリア
+// =============================================
+function confirmClear() { document.getElementById("mdl").style.display = "flex"; }
+function closeMdl()     { document.getElementById("mdl").style.display = "none"; }
+function doClear() {
+  document.getElementById("ftitle").value = "";
+  document.getElementById("fmsg").value   = "";
+  document.getElementById("fdate").value  = "";
+  document.getElementById("mlist").innerHTML = "";
+  seq = 0;
+  buildCats("U12");
+  try { localStorage.removeItem(SK); } catch(e) {}
+  addMatch();
+  closeMdl();
+  showInput();
+}
+
+// =============================================
+// HTMLエスケープ
+// =============================================
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+</script>
+
+</body>
+</html>
