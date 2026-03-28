@@ -69,7 +69,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .clrbtn { flex:1; padding:12px; background:rgba(255,82,82,0.08); border:1px solid rgba(255,82,82,0.25); border-radius:12px; color:var(--dng); font-size:14px; font-weight:700; }
 .bdbtn  { flex:2; padding:12px; background:linear-gradient(135deg,#1565c0,#0d47a1); border:none; border-radius:12px; color:#fff; font-size:14px; font-weight:800; letter-spacing:.5px; }
 
-/* ===== 掲示板オーバーレイ（入力画面の上に被せる） ===== */
+/* ===== 試合結果オーバーレイ（入力画面の上に被せる） ===== */
 #vb {
   display:none;
   position:fixed; inset:0;
@@ -82,7 +82,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .vb-inner { padding:16px 16px 80px; }
 .bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
 
-/* 掲示板カード */
+/* 試合結果カード */
 #bcard { background:linear-gradient(160deg,#0d1526 0%,#0a1020 100%); border:1px solid rgba(255,255,255,0.1); border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.5); }
 .bhdr { background:linear-gradient(135deg,#1a237e,#0d47a1); padding:20px 20px 18px; position:relative; overflow:hidden; }
 .bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
@@ -129,10 +129,10 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 <div class="bhdr">
   <div class="bclub">FC KAMIFUKUOKA THUNDERS</div>
   <div class="bttl">MATCH BOARD</div>
-  <div class="bdate">試合結果入力・掲示板</div>
+  <div class="bdate">試合結果入力・試合結果表示</div>
   <div class="nav">
     <button class="nbtn on" id="bni" onclick="showInput()">✏️ 入力</button>
-    <button class="nbtn"    id="bnb" onclick="showBoard()">📋 掲示板</button>
+    <button class="nbtn"    id="bnb" onclick="showBoard()">📋 試合結果表示</button>
   </div>
 </div>
 
@@ -160,11 +160,11 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
   </div>
   <div class="arow">
     <button class="clrbtn" onclick="confirmClear()">🗑 クリア</button>
-    <button class="bdbtn"  onclick="showBoard()">📋 掲示板を見る →</button>
+    <button class="bdbtn"  onclick="showBoard()">📋 試合結果表示 →</button>
   </div>
 </div>
 
-<!-- 掲示板オーバーレイ（fixed で上に重ねる・入力画面はそのまま） -->
+<!-- 試合結果オーバーレイ（fixed で上に重ねる・入力画面はそのまま） -->
 
 <div id="vb">
   <div class="vb-inner">
@@ -318,7 +318,7 @@ function renum() {
 }
 
 // =============================================
-// ビュー切り替え（掲示板はfixedで上に重ねる）
+// ビュー切り替え（試合結果はfixedで上に重ねる）
 // =============================================
 function showBoard() {
   renderBoard();
@@ -335,7 +335,7 @@ function showInput() {
 }
 
 // =============================================
-// 掲示板レンダリング（入力画面のDOMから直接読む）
+// 試合結果レンダリング（入力画面のDOMから直接読む）
 // =============================================
 function renderBoard() {
   var title = document.getElementById("ftitle").value;
