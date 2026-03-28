@@ -100,7 +100,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .brgt  { display:flex; flex-direction:row; align-items:center; gap:8px; flex-shrink:0; }
 .bbdg  { font-size:10px; font-weight:800; letter-spacing:2px; padding:2px 8px; border-radius:5px; }
 .bscr  { font-size:28px; font-weight:900; letter-spacing:-1px; line-height:1; }
-.btm   { font-size:12px; font-weight:800; color:var(--draw); background:rgba(255,171,64,.12); padding:4px 10px; border-radius:6px; letter-spacing:1px; }
+.btm   { font-size:11px; font-weight:800; color:var(--draw); background:rgba(255,171,64,.12); padding:4px 10px; border-radius:6px; letter-spacing:1px; }
 .bttl  { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:0; word-break:break-all; }
 .brsl  { flex-shrink:0; font-size:9px; font-weight:800; letter-spacing:2px; color:#fff; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.35); padding:3px 8px; border-radius:5px; }
 .bftr  { padding:4px 20px 4px; }
@@ -212,7 +212,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 // 定数・状態
 // =============================================
 var SK   = "thunders_v4";
-var CATS = ["U12","U11","U10","U9","U8"];
+var CATS = ["U12","U11","U10","U9","U8","U7","Girls"];
 var seq  = 0;
 var category = "U12";
 
@@ -396,7 +396,7 @@ function renderBoard() {
       var oppH  = opp  ? '<div class="bopp">'+esc("vs "+opp)+'</div>'
                        : '<div class="bopp"><span style="color:var(--t4)">相手未入力</span></div>';
       var rgtH  = tmOn
-        ? '<span class="btm">TM</span>'
+        ? '<span class="btm">⚽ トレーニングマッチ</span>'
         : r
           ? '<span class="bbdg" style="color:'+rc+';background:'+rb+'">'+r+'</span><span class="bscr" style="color:'+rc+'">'+esc(su)+'<span style="color:var(--t4);font-size:20px"> - </span>'+esc(st)+'</span>'
           : '<span style="color:var(--t4);font-size:13px">未入力</span>';
