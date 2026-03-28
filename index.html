@@ -83,8 +83,8 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
 
 /* 試合結果カード */
-#bcard { background:linear-gradient(160deg,#0d1526 0%,#0a1020 100%); overflow:hidden; border-radius:10px; }
-.bhdr { background:linear-gradient(135deg,#1a237e,#0d47a1); padding:20px 20px 18px; position:relative; overflow:hidden; }
+#bcard { background:var(--th-card); overflow:hidden; border-radius:10px; }
+.bhdr { background:var(--th-hdr); padding:20px 20px 18px; position:relative; overflow:hidden; }
 .bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
 .bclub-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
 .bclub { font-size:13px; letter-spacing:4px; color:var(--t2); }
@@ -107,8 +107,8 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:10px 14px; margin-bottom:4px; }
 .bmic  { font-size:14px; flex-shrink:0; margin-top:1px; }
 .bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
-.bline { height:1px; background:linear-gradient(90deg,transparent,#1976d2); margin-bottom:2px; }
-.bbrnd { font-size:13px; color:var(--bl3); font-weight:800; letter-spacing:3px; text-align:right; }
+.bline { height:1px; background:var(--th-line); margin-bottom:2px; }
+.bbrnd { font-size:13px; color:var(--th-accent); font-weight:800; letter-spacing:3px; text-align:right; }
 .savbtns { display:flex; gap:10px; margin-top:16px; }
 .savbtn  { flex:1; padding:14px 8px; border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:800; letter-spacing:1px; cursor:pointer; }
 .savbtn.dl  { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
@@ -125,6 +125,10 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .cfglbl  { font-size:11px; color:var(--t4); margin-bottom:4px; margin-top:10px; }
 .cfglbl:first-child { margin-top:0; }
 .cfgnote { font-size:11px; color:var(--t4); margin-top:8px; line-height:1.6; }
+.sw-row  { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; margin-bottom:4px; }
+.sw      { width:32px; height:32px; border-radius:50%; border:2px solid rgba(255,255,255,.15); cursor:pointer; transition:transform .15s, border-color .15s; }
+.sw:hover { transform:scale(1.15); }
+.sw.sw-on { border-color:#fff; transform:scale(1.2); box-shadow:0 0 0 2px rgba(255,255,255,.3); }
 
 /* モーダル */
 .ovl { position:fixed; inset:0; background:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:100; }
@@ -183,10 +187,12 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
       <span class="cfgarw" id="cfgarw">▼</span>
     </div>
     <div class="cfgbdy" id="cfgbdy">
+      <div class="cfglbl">テーマカラー</div>
+      <div class="sw-row" id="cfg-swatches"></div>
       <div class="cfglbl">ヘッダー表示名（例：FC KAMIFUKUOKA THUNDERS）</div>
       <input type="text" id="cfg-hdr" placeholder="FC KAMIFUKUOKA THUNDERS" oninput="saveClub()">
-      <div class="cfglbl">フッター表示名（例：THUNDERS）</div>
-      <input type="text" id="cfg-ftr" placeholder="THUNDERS" oninput="saveClub()">
+      <div class="cfglbl">フッター表示名（例：⚡ THUNDERS）</div>
+      <input type="text" id="cfg-ftr" placeholder="⚡ THUNDERS" oninput="saveClub()">
       <div class="cfgnote">※ この設定はクリアしても保持されます</div>
     </div>
   </div>
@@ -238,6 +244,26 @@ var SK   = "thunders_v4";
 var SK_CLUB = "club_config";
 var DEF_HDR = "FC KAMIFUKUOKA THUNDERS";
 var DEF_FTR = "⚡ THUNDERS";
+var DEF_THEME = "navy";
+var THEMES = {
+  navy:    { label:"Navy",    swatch:"#1a237e", hdr:"linear-gradient(135deg,#1a237e,#0d47a1)",         card:"linear-gradient(160deg,#0d1526 0%,#0a1020 100%)", line:"linear-gradient(90deg,transparent,#1976d2)", accent:"#1976d2" },
+  forest:  { label:"Forest",  swatch:"#1b5e20", hdr:"linear-gradient(135deg,#1b5e20,#2e7d32)",         card:"linear-gradient(160deg,#0d1a0f 0%,#091409 100%)", line:"linear-gradient(90deg,transparent,#388e3c)", accent:"#388e3c" },
+  crimson: { label:"Crimson", swatch:"#7f0000", hdr:"linear-gradient(135deg,#7f0000,#b71c1c)",         card:"linear-gradient(160deg,#1a0808 0%,#110404 100%)", line:"linear-gradient(90deg,transparent,#c62828)", accent:"#c62828" },
+  royal:   { label:"Royal",   swatch:"#4a148c", hdr:"linear-gradient(135deg,#4a148c,#6a1b9a)",         card:"linear-gradient(160deg,#120a1e 0%,#0d0714 100%)", line:"linear-gradient(90deg,transparent,#7b1fa2)", accent:"#7b1fa2" },
+  slate:   { label:"Slate",   swatch:"#263238", hdr:"linear-gradient(135deg,#263238,#37474f)",         card:"linear-gradient(160deg,#0f1418 0%,#0a0d10 100%)", line:"linear-gradient(90deg,transparent,#546e7a)", accent:"#546e7a" },
+  gold:    { label:"Gold",    swatch:"#4a3500", hdr:"linear-gradient(135deg,#4a3500,#7a5800)",         card:"linear-gradient(160deg,#16100a 0%,#0e0a04 100%)", line:"linear-gradient(90deg,transparent,#f9a825)", accent:"#f9a825" },
+  rose:    { label:"Rose",    swatch:"#880e4f", hdr:"linear-gradient(135deg,#880e4f,#ad1457)",         card:"linear-gradient(160deg,#1a0812 0%,#11040c 100%)", line:"linear-gradient(90deg,transparent,#c2185b)", accent:"#c2185b" },
+  sky:     { label:"Sky",     swatch:"#006064", hdr:"linear-gradient(135deg,#006064,#00838f)",         card:"linear-gradient(160deg,#041618 0%,#020e10 100%)", line:"linear-gradient(90deg,transparent,#00acc1)", accent:"#00acc1" },
+};
+
+function applyTheme(key) {
+  var t = THEMES[key] || THEMES[DEF_THEME];
+  var r = document.documentElement.style;
+  r.setProperty("--th-hdr",    t.hdr);
+  r.setProperty("--th-card",   t.card);
+  r.setProperty("--th-line",   t.line);
+  r.setProperty("--th-accent", t.accent);
+}
 var CATS = ["U12","U11","U10","U9","U8","U7","Girls"];
 var seq  = 0;
 var category = "U12";
@@ -549,22 +575,43 @@ function loadClubData() {
     var raw = localStorage.getItem(SK_CLUB);
     if (raw) {
       var d = JSON.parse(raw);
-      return { hdr: d.hdr || DEF_HDR, ftr: d.ftr || DEF_FTR };
+      return { hdr: d.hdr || DEF_HDR, ftr: d.ftr || DEF_FTR, theme: d.theme || DEF_THEME };
     }
   } catch(e) {}
-  return { hdr: DEF_HDR, ftr: DEF_FTR };
+  return { hdr: DEF_HDR, ftr: DEF_FTR, theme: DEF_THEME };
 }
 
 function loadClub() {
   var club = loadClubData();
   document.getElementById("cfg-hdr").value = club.hdr;
   document.getElementById("cfg-ftr").value = club.ftr;
+  buildSwatches(club.theme);
+  applyTheme(club.theme);
 }
 
 function saveClub() {
-  var hdr = document.getElementById("cfg-hdr").value.trim() || DEF_HDR;
-  var ftr = document.getElementById("cfg-ftr").value.trim() || DEF_FTR;
-  try { localStorage.setItem(SK_CLUB, JSON.stringify({hdr:hdr, ftr:ftr})); } catch(e) {}
+  var hdr   = document.getElementById("cfg-hdr").value.trim() || DEF_HDR;
+  var ftr   = document.getElementById("cfg-ftr").value.trim() || DEF_FTR;
+  var theme = document.getElementById("cfg-hdr").dataset.theme || DEF_THEME;
+  try { localStorage.setItem(SK_CLUB, JSON.stringify({hdr:hdr, ftr:ftr, theme:theme})); } catch(e) {}
+}
+
+function buildSwatches(current) {
+  var html = "";
+  Object.keys(THEMES).forEach(function(key) {
+    var t = THEMES[key];
+    var on = key === current ? "sw-on" : "";
+    html += '<button class="sw '+on+'" style="background:'+t.swatch+'" title="'+t.label+'" onclick="selectTheme(\''+key+'\')"></button>';
+  });
+  document.getElementById("cfg-swatches").innerHTML = html;
+}
+
+function selectTheme(key) {
+  var club = loadClubData();
+  document.getElementById("cfg-hdr").dataset.theme = key;
+  try { localStorage.setItem(SK_CLUB, JSON.stringify({hdr: document.getElementById("cfg-hdr").value.trim()||DEF_HDR, ftr: document.getElementById("cfg-ftr").value.trim()||DEF_FTR, theme:key})); } catch(e) {}
+  buildSwatches(key);
+  applyTheme(key);
 }
 
 function toggleCfg() {
