@@ -83,14 +83,15 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
 
 /* 試合結果カード */
-#bcard { background:linear-gradient(160deg,#0d1526 0%,#0a1020 100%); border:1px solid rgba(255,255,255,0.1); border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+#bcard { background:linear-gradient(160deg,#0d1526 0%,#0a1020 100%); overflow:hidden; }
 .bhdr { background:linear-gradient(135deg,#1a237e,#0d47a1); padding:20px 20px 18px; position:relative; overflow:hidden; }
 .bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
 .bclub { font-size:13px; letter-spacing:4px; color:var(--t2); margin-bottom:6px; }
-.bttl  { font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:10px; word-break:break-all; }
+.bttl  { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:10px; word-break:break-all; }
+.brsl  { flex-shrink:0; font-size:9px; font-weight:800; letter-spacing:2px; color:#fff; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.35); padding:3px 8px; border-radius:5px; }
 .bmeta { display:flex; align-items:center; gap:10px; }
-.bcat  { font-size:11px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:3px 10px; border-radius:6px; }
-.bdate { font-size:11px; color:var(--t2); letter-spacing:1px; }
+.bcat  { font-size:13px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:4px 12px; border-radius:6px; }
+.bdate { font-size:13px; color:var(--t2); letter-spacing:1px; }
 .brows { padding:12px 16px; }
 .brow  { display:flex; align-items:center; justify-content:space-between; padding:12px 4px; border-bottom:1px solid; gap:12px; }
 .blft  { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
@@ -105,8 +106,8 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:10px 14px; margin-bottom:14px; }
 .bmic  { font-size:14px; flex-shrink:0; margin-top:1px; }
 .bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
-.bline { height:1px; background:linear-gradient(90deg,#1976d2,transparent); margin-bottom:10px; }
-.bbrnd { font-size:13px; color:var(--bl3); font-weight:800; letter-spacing:3px; }
+.bline { height:1px; background:linear-gradient(90deg,transparent,#1976d2); margin-bottom:10px; }
+.bbrnd { font-size:13px; color:var(--bl3); font-weight:800; letter-spacing:3px; text-align:right; }
 .savbtns { display:flex; gap:10px; margin-top:16px; }
 .savbtn  { flex:1; padding:14px 8px; border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:800; letter-spacing:1px; cursor:pointer; }
 .savbtn.dl  { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
@@ -175,7 +176,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
     <div id="bcard">
       <div class="bhdr">
         <div class="bclub">FC KAMIFUKUOKA THUNDERS</div>
-        <div class="bttl"  id="bttl">MATCH RESULT</div>
+        <div class="bttl"  id="bttl"><span class="brsl">RESULT</span><span>MATCH RESULT</span></div>
         <div class="bmeta">
           <span class="bcat"  id="bcat">U12</span>
           <span class="bdate" id="bdate"></span>
@@ -358,7 +359,7 @@ function renderBoard() {
     dateStr = d.getFullYear() + "." + pad(d.getMonth()+1) + "." + pad(d.getDate());
   }
 
-  document.getElementById("bttl").textContent  = title || "MATCH RESULT";
+  document.getElementById("bttl").innerHTML = '<span class="brsl">RESULT</span><span>' + esc(title || "MATCH RESULT") + '</span>';
   document.getElementById("bcat").textContent  = category;
   document.getElementById("bdate").textContent = dateStr;
 
