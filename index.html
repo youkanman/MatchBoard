@@ -115,6 +115,16 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .savbtn.sh  { background:linear-gradient(135deg,#1a237e,#0d47a1); }
 .savbtn:disabled { opacity:.6; }
 .hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
+.cfgsec  { margin-top:8px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
+.cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
+.cfgttl  { font-size:13px; font-weight:700; color:var(--t3); letter-spacing:1px; }
+.cfgarw  { font-size:11px; color:var(--t4); transition:transform .2s; }
+.cfgarw.open { transform:rotate(180deg); }
+.cfgbdy  { display:none; padding:12px 16px 16px; border-top:1px solid rgba(255,255,255,.06); }
+.cfgbdy.open { display:block; }
+.cfglbl  { font-size:11px; color:var(--t4); margin-bottom:4px; margin-top:10px; }
+.cfglbl:first-child { margin-top:0; }
+.cfgnote { font-size:11px; color:var(--t4); margin-top:8px; line-height:1.6; }
 
 /* モーダル */
 .ovl { position:fixed; inset:0; background:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:100; }
@@ -167,6 +177,19 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
     <button class="clrbtn" onclick="confirmClear()">🗑 クリア</button>
     <button class="bdbtn"  onclick="showBoard()">📋 試合結果表示 →</button>
   </div>
+  <div class="cfgsec">
+    <div class="cfghdr" onclick="toggleCfg()">
+      <span class="cfgttl">⚙ クラブ設定</span>
+      <span class="cfgarw" id="cfgarw">▼</span>
+    </div>
+    <div class="cfgbdy" id="cfgbdy">
+      <div class="cfglbl">ヘッダー表示名（例：FC KAMIFUKUOKA THUNDERS）</div>
+      <input type="text" id="cfg-hdr" placeholder="FC KAMIFUKUOKA THUNDERS" oninput="saveClub()">
+      <div class="cfglbl">フッター表示名（例：THUNDERS）</div>
+      <input type="text" id="cfg-ftr" placeholder="THUNDERS" oninput="saveClub()">
+      <div class="cfgnote">※ この設定はクリアしても保持されます</div>
+    </div>
+  </div>
 </div>
 
 <!-- 試合結果オーバーレイ（fixed で上に重ねる・入力画面はそのまま） -->
@@ -177,7 +200,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
     <div id="bcard">
       <div class="bhdr">
         <div class="bclub-row">
-          <div class="bclub">FC KAMIFUKUOKA THUNDERS</div>
+          <div class="bclub" id="bclub">FC KAMIFUKUOKA THUNDERS</div>
           <div class="bmeta">
             <span class="bcat"  id="bcat">U12</span>
             <span class="bdate" id="bdate"></span>
@@ -212,6 +235,9 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 // 定数・状態
 // =============================================
 var SK   = "thunders_v4";
+var SK_CLUB = "club_config";
+var DEF_HDR = "FC KAMIFUKUOKA THUNDERS";
+var DEF_FTR = "⚡ THUNDERS";
 var CATS = ["U12","U11","U10","U9","U8","U7","Girls"];
 var seq  = 0;
 var category = "U12";
@@ -221,6 +247,7 @@ var category = "U12";
 // =============================================
 window.onload = function() {
   buildCats("U12");
+  loadClub();
   load();
 };
 
@@ -362,6 +389,8 @@ function renderBoard() {
     dateStr = d.getFullYear() + "." + pad(d.getMonth()+1) + "." + pad(d.getDate());
   }
 
+  var club = loadClubData();
+  document.getElementById("bclub").textContent = club.hdr;
   document.getElementById("bttl").innerHTML = '<span class="brsl">RESULT</span><span>' + esc(title || "MATCH RESULT") + '</span>';
   document.getElementById("bcat").textContent  = category;
   document.getElementById("bdate").textContent = dateStr;
@@ -411,7 +440,7 @@ function renderBoard() {
 
   document.getElementById("bftr").innerHTML =
     (msg ? '<div class="bmsg"><span class="bmic">💬</span><span class="bmtx">'+esc(msg)+'</span></div>' : "") +
-    '<div class="bline"></div><div class="bbrnd">⚡ THUNDERS</div>';
+    '<div class="bline"></div><div class="bbrnd">'+esc(club.ftr)+'</div>';
 }
 
 // =============================================
@@ -510,6 +539,39 @@ function doClear() {
   addMatch();
   closeMdl();
   showInput();
+}
+
+// =============================================
+// クラブ設定（永続化・クリア対象外）
+// =============================================
+function loadClubData() {
+  try {
+    var raw = localStorage.getItem(SK_CLUB);
+    if (raw) {
+      var d = JSON.parse(raw);
+      return { hdr: d.hdr || DEF_HDR, ftr: d.ftr || DEF_FTR };
+    }
+  } catch(e) {}
+  return { hdr: DEF_HDR, ftr: DEF_FTR };
+}
+
+function loadClub() {
+  var club = loadClubData();
+  document.getElementById("cfg-hdr").value = club.hdr;
+  document.getElementById("cfg-ftr").value = club.ftr;
+}
+
+function saveClub() {
+  var hdr = document.getElementById("cfg-hdr").value.trim() || DEF_HDR;
+  var ftr = document.getElementById("cfg-ftr").value.trim() || DEF_FTR;
+  try { localStorage.setItem(SK_CLUB, JSON.stringify({hdr:hdr, ftr:ftr})); } catch(e) {}
+}
+
+function toggleCfg() {
+  var bdy = document.getElementById("cfgbdy");
+  var arw = document.getElementById("cfgarw");
+  var open = bdy.classList.toggle("open");
+  arw.classList.toggle("open", open);
 }
 
 // =============================================
