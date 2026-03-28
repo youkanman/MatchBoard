@@ -107,7 +107,10 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
 .bline { height:1px; background:linear-gradient(90deg,#1976d2,transparent); margin-bottom:10px; }
 .bbrnd { font-size:13px; color:var(--bl3); font-weight:800; letter-spacing:3px; }
-.savbtn { width:100%; margin-top:16px; padding:14px; background:linear-gradient(135deg,#1b5e20,#2e7d32); border:none; border-radius:14px; color:#fff; font-size:15px; font-weight:800; letter-spacing:1px; }
+.savbtns { display:flex; gap:10px; margin-top:16px; }
+.savbtn  { flex:1; padding:14px 8px; border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:800; letter-spacing:1px; cursor:pointer; }
+.savbtn.dl  { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
+.savbtn.sh  { background:linear-gradient(135deg,#1a237e,#0d47a1); }
 .savbtn:disabled { opacity:.6; }
 .hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
 
@@ -181,7 +184,10 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
       <div class="brows" id="brows"></div>
       <div class="bftr"  id="bftr"></div>
     </div>
-    <button class="savbtn" id="savbtn" onclick="saveImage()">📸 画像を保存</button>
+    <div class="savbtns">
+      <button class="savbtn dl" id="savbtn-dl" onclick="saveImage('download')">📥 ダウンロード</button>
+      <button class="savbtn sh" id="savbtn-sh" onclick="saveImage('share')">📤 共有</button>
+    </div>
     <div class="hint">カード部分のみ画像として保存されます</div>
   </div>
 </div>
@@ -407,17 +413,25 @@ function renderBoard() {
 // =============================================
 // 画像保存
 // =============================================
-async function saveImage() {
-  var btn = document.getElementById("savbtn");
-  btn.disabled = true; btn.textContent = "⏳ 生成中...";
+async function saveImage(mode) {
+  var btnDl = document.getElementById("savbtn-dl");
+  var btnSh = document.getElementById("savbtn-sh");
+  btnDl.disabled = true; btnSh.disabled = true;
+  var btn = mode === "share" ? btnSh : btnDl;
+  var origText = btn.textContent;
+  btn.textContent = "⏳ 生成中...";
   try {
     var canvas = await html2canvas(document.getElementById("bcard"), {
       backgroundColor:"#0a1020", scale:2, useCORS:true, logging:false
     });
     canvas.toBlob(async function(blob) {
-      var file = new File([blob], "thunders_match.png", {type:"image/png"});
-      if (navigator.canShare && navigator.canShare({files:[file]})) {
-        await navigator.share({files:[file], title:"試合結果"});
+      if (mode === "share") {
+        var file = new File([blob], "thunders_match.png", {type:"image/png"});
+        if (navigator.canShare && navigator.canShare({files:[file]})) {
+          await navigator.share({files:[file], title:"試合結果"});
+        } else {
+          alert("お使いの環境では共有機能に対応していません。「ダウンロード」をお使いください。");
+        }
       } else {
         var a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -427,7 +441,8 @@ async function saveImage() {
       }
     }, "image/png");
   } catch(e) { alert("画像生成に失敗: "+e.message); }
-  btn.disabled = false; btn.textContent = "📸 画像を保存";
+  btnDl.disabled = false; btnSh.disabled = false;
+  btn.textContent = origText;
 }
 
 // =============================================
