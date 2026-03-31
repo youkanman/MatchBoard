@@ -33,7 +33,7 @@
 .nbtn.on { background:#fff; color:var(--bl); }
 
 /* ===== 入力画面 ===== */
-#vi { padding:20px max(16px,env(safe-area-inset-right)) 100px max(16px,env(safe-area-inset-left)); }
+#vi { padding:20px max(16px,env(safe-area-inset-right)) max(100px,calc(100px + env(safe-area-inset-bottom))) max(16px,env(safe-area-inset-left)); }
 .slbl { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--t4); text-transform:uppercase; margin-bottom:8px; display:block; }
 .flbl { font-size:11px; font-weight:700; letter-spacing:1px; color:var(--t4); margin-bottom:5px; display:block; }
 .opt  { font-size:10px; color:var(--t3); margin-left:4px; font-weight:400; letter-spacing:0; }
@@ -119,7 +119,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 
 /* ===== 試合結果オーバーレイ ===== */
 #vb { display:none; position:fixed; top:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; height:100%; background:var(--bg); overflow-y:auto; z-index:10; }
-.vb-inner { padding:16px 16px 80px; }
+.vb-inner { padding:16px max(16px,env(safe-area-inset-right)) 80px max(16px,env(safe-area-inset-left)); }
 .bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
 
 /* ===== 試合結果カード ===== */
