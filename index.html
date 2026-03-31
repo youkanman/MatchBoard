@@ -63,14 +63,13 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 .mno  { font-size:11px; font-weight:800; letter-spacing:3px; color:var(--bl3); }
 .mchr { display:flex; gap:8px; align-items:center; }
 .fg   { margin-bottom:10px; }
-.tmbtn { padding:4px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:var(--t3); font-size:11px; font-weight:800; letter-spacing:1px; }
+.tmbtn { flex:1; padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:var(--t3); font-size:11px; font-weight:800; letter-spacing:.5px; text-align:center; }
 .tmbtn.on { background:rgba(255,171,64,0.2); border-color:var(--draw); color:var(--draw); }
 .tmbdg { display:inline-block; font-size:12px; color:var(--draw); background:rgba(255,171,64,0.1); padding:4px 12px; border-radius:8px; margin-bottom:8px; }
 .rmbtn { background:rgba(255,82,82,0.1); border:none; border-radius:6px; color:var(--dng); padding:4px 8px; font-size:11px; }
 
 /* ===== ハーフ時間 ===== */
-.half-time-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-.half-time-lbl { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--t4); }
+.half-time-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }    .half-time-lbl { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--t4); }
 .half-min-sel { background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:8px; padding:3px 8px; color:var(--t3); font-size:11px; font-weight:700; outline:none; width:auto; }
 
 /* ===== スコア入力（横一列）===== */
@@ -255,9 +254,9 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
       <div class="cfglbl">テーマカラー</div>
       <div class="sw-row" id="cfg-swatches"></div>
       <div class="cfglbl">ヘッダー表示名（例：FC KAMIFUKUOKA THUNDERS）</div>
-      <input type="text" id="cfg-hdr" placeholder="FC KAMIFUKUOKA THUNDERS" oninput="saveClub()">
-      <div class="cfglbl">フッター表示名（例：⚡ THUNDERS）</div>
-      <input type="text" id="cfg-ftr" placeholder="⚡ THUNDERS" oninput="saveClub()">
+      <input type="text" id="cfg-hdr" placeholder="FC上福岡サンダース" oninput="saveClub()">
+      <div class="cfglbl">フッター表示名（例：FC KAMIFUKUOKA THUNDERS）</div>
+      <input type="text" id="cfg-ftr" placeholder="FC KAMIFUKUOKA THUNDERS" oninput="saveClub()">
       <div class="cfgnote">※ この設定はクリアしても保持されます</div>
     </div>
   </div>
@@ -345,8 +344,8 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 // =============================================
 var SK        = "thunders_v4";
 var SK_CLUB   = "club_config";
-var DEF_HDR   = "FC KAMIFUKUOKA THUNDERS";
-var DEF_FTR   = "⚡ THUNDERS";
+var DEF_HDR   = "FC上福岡サンダース";
+var DEF_FTR   = "FC KAMIFUKUOKA THUNDERS";
 var DEF_THEME = "navy";
 var HALF_MINS = [7,10,15,20,25];
 var DEF_HALF  = 20;
@@ -461,7 +460,6 @@ function addMatch(data) {
     '<div class="mch">'+
       '<span class="mno">MATCH <span id="mn'+id+'"></span></span>'+
       '<div class="mchr">'+
-        '<button class="tmbtn'+(isTM?" on":"")+'" id="tm'+id+'" onclick="toggleTM('+id+')">TM</button>'+
         '<button class="rmbtn" onclick="remMatch('+id+')">✕</button>'+
       '</div>'+
     '</div>'+
@@ -475,14 +473,11 @@ function addMatch(data) {
       '<label class="flbl">対戦相手</label>'+
       '<input type="text" id="op'+id+'" value="'+esc(opp)+'" placeholder="対戦チーム名" oninput="saveData()">'+
     '</div>'+
-    // TMバッジ（TM時のみ表示）
-    '<div id="tb'+id+'"'+(isTM?'':' style="display:none"')+'>'+
-      '<span class="tmbdg">⚽ トレーニングマッチ</span>'+
-    '</div>'+
-    // ハーフ時間（1箇所）・TMバッジとは別行
-    '<div class="half-time-row" style="margin-top:8px;">'+
+    // ハーフ時間 ＋ TMボタン（同じ行）
+    '<div class="half-time-row">'+
       '<span class="half-time-lbl">1ハーフ</span>'+
       buildMinSel('halfMin'+id, halfMin)+
+      '<button class="tmbtn'+(isTM?" on":"")+'" id="tm'+id+'" onclick="toggleTM('+id+')">⚽ トレーニングマッチ</button>'+
     '</div>'+
     // 前半スコア
     '<div class="sr">'+
@@ -695,10 +690,8 @@ function toggleH2(id) {
 
 function toggleTM(id) {
   var btn = document.getElementById("tm"+id);
-  var tb  = document.getElementById("tb"+id);
   var on  = btn.className.indexOf("on") < 0;
   btn.className = "tmbtn"+(on?" on":"");
-  tb.style.display = on ? "" : "none";
   saveData();
 }
 
