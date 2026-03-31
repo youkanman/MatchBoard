@@ -75,7 +75,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
   padding:4px 8px; flex-shrink:0; min-width:40px; text-align:center;
 }
 .sr-num {
-  flex:1; min-width:0;
+  flex:1; min-width:0; width:100%;
   background:rgba(255,255,255,0.06); border:1px solid var(--b2);
   border-radius:10px; padding:8px 4px;
   font-size:20px; font-weight:800; text-align:center;
@@ -384,6 +384,9 @@ function applyTheme(key) {
   r.setProperty("--th-card",   t.card);
   r.setProperty("--th-line",   t.line);
   r.setProperty("--th-accent", t.accent);
+  // 入力画面ヘッダー背景も直接更新（CSS変数はgradient内で効かない環境対策）
+  var appHdr = document.querySelector(".app-hdr");
+  if (appHdr) appHdr.style.background = t.hdr;
 }
 function applyClubName(hdr) {
   document.getElementById("hdr-club").textContent = hdr;
@@ -769,17 +772,17 @@ function renderBoard() {
     if (!tmOn) {
       var h1usEl   = document.getElementById("h1us"+id);
       var h1themEl = document.getElementById("h1them"+id);
-      var h1u = (h1usEl   && h1usEl.value   !== "") ? Number(h1usEl.value)   : null;
-      var h1t = (h1themEl && h1themEl.value !== "") ? Number(h1themEl.value) : null;
-
-      var h2togEl = document.getElementById("h2tog"+id);
-      var hasH2   = h2togEl ? h2togEl.checked : false;
+      // 空欄は0として扱う（placeholderが0なのでユーザーの意図に合わせる）
+      var h1u = h1usEl   ? Number(h1usEl.value   || 0) : null;
+      var h1t = h1themEl ? Number(h1themEl.value || 0) : null;
+      var h2areaEl = document.getElementById("h2area"+id);
+      var hasH2    = h2areaEl ? (h2areaEl.style.display !== "none") : false;
       var h2u = null, h2t = null;
       if (hasH2) {
         var h2usEl   = document.getElementById("h2us"+id);
         var h2themEl = document.getElementById("h2them"+id);
-        h2u = (h2usEl   && h2usEl.value   !== "") ? Number(h2usEl.value)   : null;
-        h2t = (h2themEl && h2themEl.value !== "") ? Number(h2themEl.value) : null;
+        h2u = h2usEl   ? Number(h2usEl.value   || 0) : null;
+        h2t = h2themEl ? Number(h2themEl.value || 0) : null;
       }
 
       if (!hasH2) {
