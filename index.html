@@ -375,9 +375,6 @@ function applyTheme(key) {
   r.setProperty("--th-card",   t.card);
   r.setProperty("--th-line",   t.line);
   r.setProperty("--th-accent", t.accent);
-  // 入力画面ヘッダーにもテーマカラーを反映
-  var hdrEl = document.querySelector(".hdr");
-  if (hdrEl) hdrEl.style.background = t.hdr;
 }
 
 function applyClubName(hdr) {
