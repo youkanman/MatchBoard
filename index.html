@@ -22,10 +22,10 @@
     input, select, textarea { font-family:inherit; }
 
 ```
-/* ===== ヘッダー ===== */
-.hdr { background:linear-gradient(135deg,#1a237e 0%,#0d47a1 60%,#1565c0 100%); padding:20px 20px 16px; padding-left:max(20px, env(safe-area-inset-left)); padding-right:max(20px, env(safe-area-inset-right)); position:relative; overflow:hidden; }
-.hdr::before { content:''; position:absolute; top:-30px; right:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); pointer-events:none; }
-.club-lbl { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
+/* ===== ヘッダー（アプリ・結果カード共通） ===== */
+.bhdr { background:var(--th-hdr); padding:20px 20px 18px; padding-left:max(20px, env(safe-area-inset-left)); padding-right:max(20px, env(safe-area-inset-right)); position:relative; overflow:hidden; }
+.bhdr::before { content:''; position:absolute; top:-30px; right:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); pointer-events:none; }
+.bclub { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
 .app-ttl  { font-size:26px; font-weight:900; letter-spacing:1px; color:#fff; line-height:1; }
 .app-sub  { font-size:13px; color:var(--bl4); margin-top:4px; }
 .nav { display:flex; gap:8px; margin-top:14px; }
@@ -123,8 +123,6 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 
 /* ===== 試合結果カード ===== */
 #bcard { background:var(--th-card); overflow:hidden; border-radius:10px; }
-.bc-hdr { background:var(--th-hdr); padding:20px 20px 18px; position:relative; overflow:hidden; }
-.bc-hdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
 .bclub-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
 .bclub { font-size:13px; letter-spacing:4px; color:var(--t2); }
 .bmeta { display:flex; align-items:center; gap:8px; }
@@ -202,8 +200,8 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 
 <!-- ヘッダー -->
 
-<div class="hdr">
-  <div class="club-lbl" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
+<div class="bhdr">
+  <div class="bclub" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
   <div class="app-ttl">MATCH BOARD</div>
   <div class="app-sub">試合結果入力・試合結果表示</div>
   <div class="nav">
@@ -261,7 +259,7 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
   <div class="vb-inner">
     <button class="bkbtn" onclick="showInput()">← 入力に戻る</button>
     <div id="bcard">
-      <div class="bc-hdr">
+      <div class="bhdr">
         <div class="bclub-row">
           <div class="bclub" id="bclub">FC KAMIFUKUOKA THUNDERS</div>
           <div class="bmeta">
@@ -383,9 +381,6 @@ function applyTheme(key) {
   r.setProperty("--th-card",   t.card);
   r.setProperty("--th-line",   t.line);
   r.setProperty("--th-accent", t.accent);
-  // 入力画面ヘッダー背景も直接更新（CSS変数はgradient内で効かない環境対策）
-  var appHdr = document.querySelector(".hdr");
-  if (appHdr) appHdr.style.background = t.hdr;
 }
 function applyClubName(hdr) {
   document.getElementById("hdr-club").textContent = hdr;
