@@ -24,175 +24,171 @@
     button { font-family:inherit; cursor:pointer; }
     input, select, textarea { font-family:inherit; }
 
-```
-/* ヘッダー（アプリ用・固定グラデーション） */
-.hdr { background:linear-gradient(135deg,#1a237e 0%,#0d47a1 60%,#1565c0 100%); padding:20px 20px 16px; padding-left:max(20px, env(safe-area-inset-left)); padding-right:max(20px, env(safe-area-inset-right)); position:relative; overflow:hidden; }
-.hdr::before { content:''; position:absolute; top:-30px; right:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); pointer-events:none; }
-/* 結果カードヘッダー（テーマカラー切替） */
-.bhdr { background:var(--th-hdr); padding:20px 20px 18px; position:relative; overflow:hidden; }
-.bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
-.bclub { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
-.app-ttl { font-size:26px; font-weight:900; letter-spacing:1px; color:#fff; line-height:1; }
-.app-sub { font-size:13px; color:var(--bl4); margin-top:4px; }
-.nav { display:flex; gap:8px; margin-top:14px; }
-.nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:12px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
-.nbtn.on { background:#fff; color:var(--bl); }
+    /* ヘッダー（アプリ用・固定グラデーション） */
+    .hdr { background:linear-gradient(135deg,#1a237e 0%,#0d47a1 60%,#1565c0 100%); padding:20px 20px 16px; padding-left:max(20px, env(safe-area-inset-left)); padding-right:max(20px, env(safe-area-inset-right)); position:relative; overflow:hidden; }
+    .hdr::before { content:''; position:absolute; top:-30px; right:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); pointer-events:none; }
+    /* 結果カードヘッダー（テーマカラー切替） */
+    .bhdr { background:var(--th-hdr); padding:20px 20px 18px; position:relative; overflow:hidden; }
+    .bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
+    .bclub { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
+    .app-ttl { font-size:26px; font-weight:900; letter-spacing:1px; color:#fff; line-height:1; }
+    .app-sub { font-size:13px; color:var(--bl4); margin-top:4px; }
+    .nav { display:flex; gap:8px; margin-top:14px; }
+    .nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:12px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
+    .nbtn.on { background:#fff; color:var(--bl); }
 
-/* 入力画面 */
-#vi { padding:20px max(16px, env(safe-area-inset-right)) 100px max(16px, env(safe-area-inset-left)); }
-.slbl { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--t4); text-transform:uppercase; margin-bottom:8px; display:block; }
-.flbl { font-size:11px; font-weight:700; letter-spacing:1px; color:var(--t4); margin-bottom:5px; display:block; }
-.opt  { font-size:10px; color:var(--t3); margin-left:4px; font-weight:400; letter-spacing:0; }
-.sec  { margin-bottom:18px; }
-.dvd  { height:1px; background:var(--b1); margin:4px 0 20px; }
-input[type=text], input[type=number], select {
-  width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--b2);
-  border-radius:10px; padding:10px 14px; color:var(--t1); font-size:14px; outline:none;
-}
-input[type=number] { -moz-appearance:textfield; }
-input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; }
-input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:10px; padding:10px 14px; color:var(--t1); font-size:14px; outline:none; -webkit-appearance:none; appearance:none; color-scheme:dark; }
-.cats { display:flex; gap:8px; flex-wrap:wrap; }
-.cbtn { padding:6px 16px; border-radius:20px; border:1px solid rgba(255,255,255,0.15); background:transparent; color:var(--t2); font-size:13px; font-weight:700; }
-.cbtn.on { background:var(--bl3); border-color:var(--bl3); color:#fff; }
+    /* 入力画面 */
+    #vi { padding:20px max(16px, env(safe-area-inset-right)) 100px max(16px, env(safe-area-inset-left)); }
+    .slbl { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--t4); text-transform:uppercase; margin-bottom:8px; display:block; }
+    .flbl { font-size:11px; font-weight:700; letter-spacing:1px; color:var(--t4); margin-bottom:5px; display:block; }
+    .opt  { font-size:10px; color:var(--t3); margin-left:4px; font-weight:400; letter-spacing:0; }
+    .sec  { margin-bottom:18px; }
+    .dvd  { height:1px; background:var(--b1); margin:4px 0 20px; }
+    input[type=text], input[type=number], select {
+      width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--b2);
+      border-radius:10px; padding:10px 14px; color:var(--t1); font-size:14px; outline:none;
+    }
+    input[type=number] { -moz-appearance:textfield; }
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; }
+    input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:10px; padding:10px 14px; color:var(--t1); font-size:14px; outline:none; -webkit-appearance:none; appearance:none; color-scheme:dark; }
+    .cats { display:flex; gap:8px; flex-wrap:wrap; }
+    .cbtn { padding:6px 16px; border-radius:20px; border:1px solid rgba(255,255,255,0.15); background:transparent; color:var(--t2); font-size:13px; font-weight:700; }
+    .cbtn.on { background:var(--bl3); border-color:var(--bl3); color:#fff; }
 
-/* 試合カード */
-.mc   { background:rgba(255,255,255,0.04); border:1px solid var(--b1); border-radius:14px; padding:14px 14px 16px; margin-bottom:12px; }
-.mch  { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-.mno  { font-size:11px; font-weight:800; letter-spacing:3px; color:var(--bl3); }
-.mchr { display:flex; gap:8px; align-items:center; }
-.fg   { margin-bottom:10px; }
+    /* 試合カード */
+    .mc   { background:rgba(255,255,255,0.04); border:1px solid var(--b1); border-radius:14px; padding:14px 14px 16px; margin-bottom:12px; }
+    .mch  { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .mno  { font-size:11px; font-weight:800; letter-spacing:3px; color:var(--bl3); }
+    .mchr { display:flex; gap:8px; align-items:center; }
+    .fg   { margin-bottom:10px; }
 
-/* ハーフ時間 + TMボタン行 */
-.half-time-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-.half-time-lbl { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--t4); flex-shrink:0; }
-.half-min-sel { background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:8px; padding:3px 8px; color:var(--t3); font-size:11px; font-weight:700; outline:none; width:auto; }
-.tmbtn { flex:1; padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:var(--t3); font-size:11px; font-weight:800; letter-spacing:.5px; text-align:center; }
-.tmbtn.on { background:rgba(255,171,64,0.2); border-color:var(--draw); color:var(--draw); }
+    /* ハーフ時間 + TMボタン行 */
+    .half-time-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+    .half-time-lbl { font-size:10px; font-weight:700; letter-spacing:2px; color:var(--t4); flex-shrink:0; }
+    .half-min-sel { background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:8px; padding:3px 8px; color:var(--t3); font-size:11px; font-weight:700; outline:none; width:auto; }
+    .tmbtn { flex:1; padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:var(--t3); font-size:11px; font-weight:800; letter-spacing:.5px; text-align:center; }
+    .tmbtn.on { background:rgba(255,171,64,0.2); border-color:var(--draw); color:var(--draw); }
 
-/* スコア入力（前半・後半インライン） */
-.sr-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-.sr-lbl { font-size:11px; font-weight:800; letter-spacing:2px; color:var(--bl4); background:rgba(25,118,210,0.15); border:1px solid rgba(25,118,210,0.3); border-radius:6px; padding:5px 8px; flex-shrink:0; min-width:40px; text-align:center; }
-.sr-num { flex:1; min-width:0; background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:10px; padding:8px 4px; font-size:20px; font-weight:800; text-align:center; color:var(--t1); outline:none; -moz-appearance:textfield; }
-.sr-num::-webkit-inner-spin-button { -webkit-appearance:none; }
-.ssep { font-size:20px; color:var(--t4); font-weight:700; flex-shrink:0; }
+    /* スコア入力（前半・後半インライン） */
+    .sr-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .sr-lbl { font-size:11px; font-weight:800; letter-spacing:2px; color:var(--bl4); background:rgba(25,118,210,0.15); border:1px solid rgba(25,118,210,0.3); border-radius:6px; padding:5px 8px; flex-shrink:0; min-width:40px; text-align:center; }
+    .sr-num { flex:1; min-width:0; background:rgba(255,255,255,0.06); border:1px solid var(--b2); border-radius:10px; padding:8px 4px; font-size:20px; font-weight:800; text-align:center; color:var(--t1); outline:none; -moz-appearance:textfield; }
+    .sr-num::-webkit-inner-spin-button { -webkit-appearance:none; }
+    .ssep { font-size:20px; color:var(--t4); font-weight:700; flex-shrink:0; }
 
-/* 後半トグル */
-.half-toggle-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.half-toggle-lbl { font-size:11px; color:var(--t3); }
-.half-tog { position:relative; width:40px; height:22px; flex-shrink:0; }
-.half-tog input { opacity:0; width:0; height:0; position:absolute; }
-.half-tog-track { position:absolute; inset:0; background:rgba(255,255,255,0.1); border-radius:11px; border:1px solid var(--b2); transition:background .2s; }
-.half-tog input:checked + .half-tog-track { background:var(--bl3); }
-.half-tog-thumb { position:absolute; top:2px; left:2px; width:16px; height:16px; background:#fff; border-radius:50%; transition:transform .2s; }
-.half-tog input:checked ~ .half-tog-thumb { transform:translateX(18px); }
-.half-divider { height:1px; background:rgba(255,255,255,0.06); margin:4px 0 10px; }
+    /* 後半トグル */
+    .half-toggle-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .half-toggle-lbl { font-size:11px; color:var(--t3); }
+    .half-tog { position:relative; width:40px; height:22px; flex-shrink:0; }
+    .half-tog input { opacity:0; width:0; height:0; position:absolute; }
+    .half-tog-track { position:absolute; inset:0; background:rgba(255,255,255,0.1); border-radius:11px; border:1px solid var(--b2); transition:background .2s; }
+    .half-tog input:checked + .half-tog-track { background:var(--bl3); }
+    .half-tog-thumb { position:absolute; top:2px; left:2px; width:16px; height:16px; background:#fff; border-radius:50%; transition:transform .2s; }
+    .half-tog input:checked ~ .half-tog-thumb { transform:translateX(18px); }
+    .half-divider { height:1px; background:rgba(255,255,255,0.06); margin:4px 0 10px; }
 
-/* 得点・失点ログ */
-.goal-section { margin-top:12px; border-top:1px solid rgba(255,255,255,0.06); padding-top:12px; }
-.goal-log-list { margin-bottom:8px; }
-.goal-log-item { display:flex; align-items:flex-start; gap:8px; padding:7px 10px; border-radius:8px; margin-bottom:5px; font-size:12px; line-height:1.5; }
-.goal-log-item.gl-goal    { background:rgba(0,230,118,0.07);  border:1px solid rgba(0,230,118,0.15); }
-.goal-log-item.gl-concede { background:rgba(255,82,82,0.07);  border:1px solid rgba(255,82,82,0.15); }
-.gl-body { flex:1; min-width:0; cursor:pointer; }
-.gl-main { color:var(--t1); font-weight:700; }
-.gl-sub  { color:var(--t3); font-size:11px; margin-top:1px; }
-.gl-del  { background:none; border:none; color:var(--t4); font-size:13px; padding:2px 4px; flex-shrink:0; line-height:1; }
-.gl-del:active { color:var(--dng); }
-.goal-btns { display:flex; gap:8px; }
-.goal-add-btn { flex:1; padding:8px 0; border-radius:8px; font-size:12px; font-weight:700; border:1px dashed; background:transparent; letter-spacing:.5px; }
-.goal-add-btn.ga-goal    { border-color:rgba(0,230,118,0.3); color:var(--win); }
-.goal-add-btn.ga-concede { border-color:rgba(255,82,82,0.3);  color:var(--lose); }
+    /* 得点・失点ログ */
+    .goal-section { margin-top:12px; border-top:1px solid rgba(255,255,255,0.06); padding-top:12px; }
+    .goal-log-list { margin-bottom:8px; }
+    .goal-log-item { display:flex; align-items:flex-start; gap:8px; padding:7px 10px; border-radius:8px; margin-bottom:5px; font-size:12px; line-height:1.5; }
+    .goal-log-item.gl-goal    { background:rgba(0,230,118,0.07);  border:1px solid rgba(0,230,118,0.15); }
+    .goal-log-item.gl-concede { background:rgba(255,82,82,0.07);  border:1px solid rgba(255,82,82,0.15); }
+    .gl-body { flex:1; min-width:0; cursor:pointer; }
+    .gl-main { color:var(--t1); font-weight:700; }
+    .gl-sub  { color:var(--t3); font-size:11px; margin-top:1px; }
+    .gl-del  { background:none; border:none; color:var(--t4); font-size:13px; padding:2px 4px; flex-shrink:0; line-height:1; }
+    .gl-del:active { color:var(--dng); }
+    .goal-btns { display:flex; gap:8px; }
+    .goal-add-btn { flex:1; padding:8px 0; border-radius:8px; font-size:12px; font-weight:700; border:1px dashed; background:transparent; letter-spacing:.5px; }
+    .goal-add-btn.ga-goal    { border-color:rgba(0,230,118,0.3); color:var(--win); }
+    .goal-add-btn.ga-concede { border-color:rgba(255,82,82,0.3);  color:var(--lose); }
 
-.rmbtn  { background:rgba(255,82,82,0.1); border:none; border-radius:6px; color:var(--dng); padding:4px 8px; font-size:11px; }
-.addbtn { width:100%; background:rgba(25,118,210,0.1); border:1px dashed rgba(25,118,210,0.4); border-radius:10px; color:var(--bl4); padding:11px; font-size:13px; font-weight:700; margin-bottom:20px; }
-.arow   { display:flex; gap:10px; }
-.clrbtn { flex:1; padding:12px; background:rgba(255,82,82,0.08); border:1px solid rgba(255,82,82,0.25); border-radius:12px; color:var(--dng); font-size:14px; font-weight:700; }
-.bdbtn  { flex:2; padding:12px; background:linear-gradient(135deg,#1565c0,#0d47a1); border:none; border-radius:12px; color:#fff; font-size:14px; font-weight:800; letter-spacing:.5px; }
+    .rmbtn  { background:rgba(255,82,82,0.1); border:none; border-radius:6px; color:var(--dng); padding:4px 8px; font-size:11px; }
+    .addbtn { width:100%; background:rgba(25,118,210,0.1); border:1px dashed rgba(25,118,210,0.4); border-radius:10px; color:var(--bl4); padding:11px; font-size:13px; font-weight:700; margin-bottom:20px; }
+    .arow   { display:flex; gap:10px; }
+    .clrbtn { flex:1; padding:12px; background:rgba(255,82,82,0.08); border:1px solid rgba(255,82,82,0.25); border-radius:12px; color:var(--dng); font-size:14px; font-weight:700; }
+    .bdbtn  { flex:2; padding:12px; background:linear-gradient(135deg,#1565c0,#0d47a1); border:none; border-radius:12px; color:#fff; font-size:14px; font-weight:800; letter-spacing:.5px; }
 
-/* 試合結果オーバーレイ */
-#vb { display:none; position:fixed; inset:0; background:var(--bg); overflow-y:auto; z-index:10; max-width:480px; margin:0 auto; }
-.vb-inner { padding:16px 16px 80px; }
-.bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
+    /* 試合結果オーバーレイ */
+    #vb { display:none; position:fixed; inset:0; background:var(--bg); overflow-y:auto; z-index:10; max-width:480px; margin:0 auto; }
+    .vb-inner { padding:16px 16px 80px; }
+    .bkbtn { display:inline-flex; align-items:center; gap:6px; padding:4px 0 16px; color:var(--bl4); font-size:13px; font-weight:700; background:none; border:none; }
 
-/* 試合結果カード */
-#bcard { background:var(--th-card); overflow:hidden; border-radius:10px; }
-.bclub-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.bmeta { display:flex; align-items:center; gap:8px; }
-.bcat  { font-size:13px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:4px 12px; border-radius:6px; }
-.bdate { font-size:13px; color:var(--t2); letter-spacing:1px; }
-.brows { padding:12px 16px; }
-.brow  { display:flex; align-items:center; justify-content:space-between; padding:12px 4px; border-bottom:1px solid; gap:12px; }
-.blft  { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
-.bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; }
-.bmn   { font-size:11px; color:var(--t3); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.bopp  { font-size:15px; font-weight:700; color:var(--t1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.brgt  { display:flex; flex-direction:row; align-items:center; gap:8px; flex-shrink:0; }
-.bbdg  { font-size:10px; font-weight:800; letter-spacing:2px; padding:2px 8px; border-radius:5px; }
-.bscr  { font-size:28px; font-weight:900; letter-spacing:-1px; line-height:1; }
-.btm   { font-size:11px; font-weight:800; color:var(--draw); background:rgba(255,171,64,.12); padding:4px 10px; border-radius:6px; letter-spacing:1px; }
-.bttl  { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:0; word-break:break-all; }
-.brsl  { flex-shrink:0; font-size:9px; font-weight:800; letter-spacing:2px; color:#fff; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.35); padding:3px 8px; border-radius:5px; }
-.bftr  { padding:4px 20px 4px; }
-.bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:10px 14px; margin-bottom:4px; }
-.bmic  { font-size:14px; flex-shrink:0; margin-top:1px; }
-.bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
-.bline { height:1px; background:var(--th-line); margin-bottom:2px; }
-.bbrnd { font-size:13px; color:var(--th-accent); font-weight:800; letter-spacing:3px; text-align:right; }
-.savbtns { display:flex; gap:10px; margin-top:16px; }
-.savbtn  { flex:1; padding:14px 8px; border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:800; letter-spacing:1px; cursor:pointer; }
-.savbtn.dl  { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
-.savbtn.sh  { background:linear-gradient(135deg,#1a237e,#0d47a1); }
-.savbtn:disabled { opacity:.6; }
-.hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
+    /* 試合結果カード */
+    #bcard { background:var(--th-card); overflow:hidden; border-radius:10px; }
+    .bclub-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+    .bmeta { display:flex; align-items:center; gap:8px; }
+    .bcat  { font-size:13px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:4px 12px; border-radius:6px; }
+    .bdate { font-size:13px; color:var(--t2); letter-spacing:1px; }
+    .brows { padding:12px 16px; }
+    .brow  { display:flex; align-items:center; justify-content:space-between; padding:12px 4px; border-bottom:1px solid; gap:12px; }
+    .blft  { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
+    .bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; }
+    .bmn   { font-size:11px; color:var(--t3); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .bopp  { font-size:15px; font-weight:700; color:var(--t1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .brgt  { display:flex; flex-direction:row; align-items:center; gap:8px; flex-shrink:0; }
+    .bbdg  { font-size:10px; font-weight:800; letter-spacing:2px; padding:2px 8px; border-radius:5px; }
+    .bscr  { font-size:28px; font-weight:900; letter-spacing:-1px; line-height:1; }
+    .btm   { font-size:11px; font-weight:800; color:var(--draw); background:rgba(255,171,64,.12); padding:4px 10px; border-radius:6px; letter-spacing:1px; }
+    .bttl  { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:0; word-break:break-all; }
+    .brsl  { flex-shrink:0; font-size:9px; font-weight:800; letter-spacing:2px; color:#fff; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.35); padding:3px 8px; border-radius:5px; }
+    .bftr  { padding:4px 20px 4px; }
+    .bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:10px 14px; margin-bottom:4px; }
+    .bmic  { font-size:14px; flex-shrink:0; margin-top:1px; }
+    .bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
+    .bline { height:1px; background:var(--th-line); margin-bottom:2px; }
+    .bbrnd { font-size:13px; color:var(--th-accent); font-weight:800; letter-spacing:3px; text-align:right; }
+    .savbtns { display:flex; gap:10px; margin-top:16px; }
+    .savbtn  { flex:1; padding:14px 8px; border:none; border-radius:14px; color:#fff; font-size:14px; font-weight:800; letter-spacing:1px; cursor:pointer; }
+    .savbtn.dl  { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
+    .savbtn.sh  { background:linear-gradient(135deg,#1a237e,#0d47a1); }
+    .savbtn:disabled { opacity:.6; }
+    .hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
 
-/* クラブ設定 */
-.cfgsec  { margin-top:8px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
-.cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
-.cfgttl  { font-size:13px; font-weight:700; color:var(--t3); letter-spacing:1px; }
-.cfgarw  { font-size:11px; color:var(--t4); transition:transform .2s; }
-.cfgarw.open { transform:rotate(180deg); }
-.cfgbdy  { display:none; padding:12px 16px 16px; border-top:1px solid rgba(255,255,255,.06); }
-.cfgbdy.open { display:block; }
-.cfglbl  { font-size:11px; color:var(--t4); margin-bottom:4px; margin-top:10px; }
-.cfglbl:first-child { margin-top:0; }
-.cfgnote { font-size:11px; color:var(--t4); margin-top:8px; line-height:1.6; }
-.sw-row  { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; margin-bottom:4px; }
-.sw      { width:32px; height:32px; border-radius:50%; border:2px solid rgba(255,255,255,.15); cursor:pointer; transition:transform .15s, border-color .15s; }
-.sw:hover { transform:scale(1.15); }
-.sw.sw-on { border-color:#fff; transform:scale(1.2); box-shadow:0 0 0 2px rgba(255,255,255,.3); }
+    /* クラブ設定 */
+    .cfgsec  { margin-top:8px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
+    .cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
+    .cfgttl  { font-size:13px; font-weight:700; color:var(--t3); letter-spacing:1px; }
+    .cfgarw  { font-size:11px; color:var(--t4); transition:transform .2s; }
+    .cfgarw.open { transform:rotate(180deg); }
+    .cfgbdy  { display:none; padding:12px 16px 16px; border-top:1px solid rgba(255,255,255,.06); }
+    .cfgbdy.open { display:block; }
+    .cfglbl  { font-size:11px; color:var(--t4); margin-bottom:4px; margin-top:10px; }
+    .cfglbl:first-child { margin-top:0; }
+    .cfgnote { font-size:11px; color:var(--t4); margin-top:8px; line-height:1.6; }
+    .sw-row  { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; margin-bottom:4px; }
+    .sw      { width:32px; height:32px; border-radius:50%; border:2px solid rgba(255,255,255,.15); cursor:pointer; transition:transform .15s, border-color .15s; }
+    .sw:hover { transform:scale(1.15); }
+    .sw.sw-on { border-color:#fff; transform:scale(1.2); box-shadow:0 0 0 2px rgba(255,255,255,.3); }
 
-/* モーダル共通 */
-.ovl { position:fixed; inset:0; background:rgba(0,0,0,.75); display:flex; align-items:center; justify-content:center; z-index:200; padding:16px; }
-.mdl { background:var(--bg2); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:24px 20px; width:100%; max-width:340px; }
-.mttl { font-size:18px; font-weight:800; margin-bottom:8px; }
-.msub { font-size:13px; color:var(--t3); margin-bottom:24px; }
-.mok  { width:100%; padding:12px; background:rgba(255,82,82,.15); border:1px solid rgba(255,82,82,.4); border-radius:10px; color:var(--lose); font-size:14px; font-weight:800; margin-bottom:8px; }
-.mcnl { width:100%; padding:11px; background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:10px; color:var(--t3); font-size:14px; }
+    /* モーダル共通 */
+    .ovl { position:fixed; inset:0; background:rgba(0,0,0,.75); display:flex; align-items:center; justify-content:center; z-index:200; padding:16px; }
+    .mdl { background:var(--bg2); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:24px 20px; width:100%; max-width:340px; }
+    .mttl { font-size:18px; font-weight:800; margin-bottom:8px; }
+    .msub { font-size:13px; color:var(--t3); margin-bottom:24px; }
+    .mok  { width:100%; padding:12px; background:rgba(255,82,82,.15); border:1px solid rgba(255,82,82,.4); border-radius:10px; color:var(--lose); font-size:14px; font-weight:800; margin-bottom:8px; }
+    .mcnl { width:100%; padding:11px; background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:10px; color:var(--t3); font-size:14px; }
 
-/* 得点・失点入力モーダル */
-.gmdl-ttl { font-size:16px; font-weight:800; margin-bottom:16px; }
-.gmdl-row { margin-bottom:12px; }
-.gmdl-lbl { font-size:11px; font-weight:700; letter-spacing:1px; color:var(--t4); margin-bottom:5px; display:block; }
-.gmdl-half-row { display:flex; gap:8px; margin-bottom:12px; }
-.gmdl-hbtn { flex:1; padding:9px 0; border-radius:8px; border:1px solid rgba(255,255,255,.15); background:transparent; color:var(--t3); font-size:13px; font-weight:700; }
-.gmdl-hbtn.on { background:var(--bl3); border-color:var(--bl3); color:#fff; }
-.gmdl-min-row { display:flex; align-items:flex-end; gap:8px; }
-.gmdl-min-row input { width:80px !important; flex-shrink:0; }
-.gmdl-min-row span { font-size:13px; color:var(--t3); padding-bottom:10px; }
-.gmdl-actions { display:flex; gap:8px; margin-top:18px; }
-.gmdl-ok  { flex:2; padding:12px; border:none; border-radius:10px; color:#fff; font-size:14px; font-weight:800; }
-.gmdl-ok.goal    { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
-.gmdl-ok.concede { background:linear-gradient(135deg,#7f0000,#b71c1c); }
-.gmdl-cnl { flex:1; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:10px; color:var(--t3); font-size:14px; }
-```
-
+    /* 得点・失点入力モーダル */
+    .gmdl-ttl { font-size:16px; font-weight:800; margin-bottom:16px; }
+    .gmdl-row { margin-bottom:12px; }
+    .gmdl-lbl { font-size:11px; font-weight:700; letter-spacing:1px; color:var(--t4); margin-bottom:5px; display:block; }
+    .gmdl-half-row { display:flex; gap:8px; margin-bottom:12px; }
+    .gmdl-hbtn { flex:1; padding:9px 0; border-radius:8px; border:1px solid rgba(255,255,255,.15); background:transparent; color:var(--t3); font-size:13px; font-weight:700; }
+    .gmdl-hbtn.on { background:var(--bl3); border-color:var(--bl3); color:#fff; }
+    .gmdl-min-row { display:flex; align-items:flex-end; gap:8px; }
+    .gmdl-min-row input { width:80px !important; flex-shrink:0; }
+    .gmdl-min-row span { font-size:13px; color:var(--t3); padding-bottom:10px; }
+    .gmdl-actions { display:flex; gap:8px; margin-top:18px; }
+    .gmdl-ok  { flex:2; padding:12px; border:none; border-radius:10px; color:#fff; font-size:14px; font-weight:800; }
+    .gmdl-ok.goal    { background:linear-gradient(135deg,#1b5e20,#2e7d32); }
+    .gmdl-ok.concede { background:linear-gradient(135deg,#7f0000,#b71c1c); }
+    .gmdl-cnl { flex:1; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:10px; color:var(--t3); font-size:14px; }
   </style>
 </head>
 <body>
 
 <!-- ヘッダー -->
-
 <div class="hdr">
   <div class="bclub" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
   <div class="app-ttl">MATCH BOARD</div>
@@ -204,7 +200,6 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 </div>
 
 <!-- 入力画面（常にDOMに存在） -->
-
 <div id="vi">
   <div class="sec">
     <label class="slbl">大会・イベント名</label>
@@ -247,7 +242,6 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 </div>
 
 <!-- 試合結果オーバーレイ（fixed で上に重ねる） -->
-
 <div id="vb">
   <div class="vb-inner">
     <button class="bkbtn" onclick="showInput()">← 入力に戻る</button>
@@ -274,7 +268,6 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 </div>
 
 <!-- クリア確認モーダル -->
-
 <div class="ovl" id="mdl" style="display:none;">
   <div class="mdl">
     <div class="mttl">クリアしますか？</div>
@@ -285,7 +278,6 @@ input[type=date] { width:100%; background:rgba(255,255,255,0.06); border:1px sol
 </div>
 
 <!-- 得点・失点入力モーダル -->
-
 <div class="ovl" id="gmdl" style="display:none;">
   <div class="mdl">
     <div class="gmdl-ttl" id="gmdl-ttl">⚽ 得点を記録</div>
@@ -374,6 +366,9 @@ function applyTheme(key) {
   r.setProperty("--th-card",   t.card);
   r.setProperty("--th-line",   t.line);
   r.setProperty("--th-accent", t.accent);
+  // 入力画面ヘッダーにもテーマカラーを反映
+  var hdrEl = document.querySelector(".hdr");
+  if (hdrEl) hdrEl.style.background = t.hdr;
 }
 
 function applyClubName(hdr) {
@@ -940,6 +935,5 @@ function esc(s) {
   return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 </script>
-
 </body>
 </html>
