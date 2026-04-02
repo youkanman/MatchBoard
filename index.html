@@ -793,7 +793,9 @@ async function saveImage(mode) {
       } else {
         var a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = "thunders_match.png";
+        var fdate = document.getElementById("fdate").value || new Date().toISOString().slice(0,10);
+        var dateStr = fdate.replace(/-/g, "");
+        a.download = "matchboard_" + category + "_" + dateStr + ".png";
         a.click();
         URL.revokeObjectURL(a.href);
       }
