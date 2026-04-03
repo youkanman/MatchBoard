@@ -779,12 +779,33 @@ async function saveImage(mode) {
   var origText = btn.textContent;
   btn.textContent = "⏳ 生成中...";
   try {
-    var canvas = await html2canvas(document.getElementById("bcard"), {
-      backgroundColor:"#0a1020", scale:2, useCORS:true, logging:false
+    // 出力幅1080pxに合わせてscaleを計算
+    var bcardEl = document.getElementById("bcard");
+    var displayW = bcardEl.offsetWidth;
+    var targetW  = 1080;
+    var targetH  = 1350;
+    var scaleVal = targetW / displayW;
+
+    var srcCanvas = await html2canvas(bcardEl, {
+      backgroundColor:"#0a1020", scale:scaleVal, useCORS:true, logging:false
     });
-    canvas.toBlob(async function(blob) {
+
+    // 1080x1350の出力キャンバスを作成し、コンテンツ上寄せ・下を同色で埋める
+    var outCanvas = document.createElement("canvas");
+    outCanvas.width  = targetW;
+    outCanvas.height = targetH;
+    var ctx = outCanvas.getContext("2d");
+    ctx.fillStyle = "#0a1020";
+    ctx.fillRect(0, 0, targetW, targetH);
+    var srcH = Math.min(srcCanvas.height, targetH);
+    ctx.drawImage(srcCanvas, 0, 0, targetW, srcH, 0, 0, targetW, srcH);
+
+    outCanvas.toBlob(async function(blob) {
+      var fdate = document.getElementById("fdate").value || new Date().toISOString().slice(0,10);
+      var dateStr = fdate.replace(/-/g, "");
+      var fname = "matchboard_" + category + "_" + dateStr + ".png";
       if (mode === "share") {
-        var file = new File([blob], "thunders_match.png", {type:"image/png"});
+        var file = new File([blob], fname, {type:"image/png"});
         if (navigator.canShare && navigator.canShare({files:[file]})) {
           await navigator.share({files:[file], title:"試合結果"});
         } else {
@@ -793,9 +814,7 @@ async function saveImage(mode) {
       } else {
         var a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        var fdate = document.getElementById("fdate").value || new Date().toISOString().slice(0,10);
-        var dateStr = fdate.replace(/-/g, "");
-        a.download = "matchboard_" + category + "_" + dateStr + ".png";
+        a.download = fname;
         a.click();
         URL.revokeObjectURL(a.href);
       }
