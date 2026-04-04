@@ -33,8 +33,8 @@
     .bclub { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
     .app-ttl { font-size:26px; font-weight:900; letter-spacing:1px; color:#fff; line-height:1; }
     .app-sub { font-size:13px; color:var(--bl4); margin-top:4px; }
-    .nav { display:flex; gap:8px; margin-top:14px; }
-    .nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:12px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
+    .nav { display:flex; gap:8px; margin-top:8px; }
+    .nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
     .nbtn.on { background:#fff; color:var(--bl); }
 
     /* 入力画面 */
@@ -191,13 +191,11 @@
 <!-- ヘッダー -->
 <div class="hdr">
   <div class="bclub" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
-  <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
-    <div class="app-ttl">MATCH BOARD</div>
-    <div class="app-sub">NO MATCH IS JUST A MATCH</div>
-  </div>
+  <div class="app-ttl">MATCH BOARD</div>
   <div class="nav">
-    <button class="nbtn on" id="bni" onclick="showInput()">✏️ 入力</button>
-    <button class="nbtn"    id="bnb" onclick="showBoard()">📋 試合結果表示</button>
+    <button class="nbtn on" id="bni" onclick="showInput()" style="display:none;">✏️ 入力</button>
+    <div class="app-sub" id="nav-sub" style="flex:1; align-self:flex-end; font-size:18px;">NO MATCH IS JUST A MATCH</div>
+    <button class="nbtn" id="bnb" onclick="showBoard()" style="flex:1;">📋 試合結果表示</button>
   </div>
 </div>
 
@@ -675,14 +673,18 @@ function renum() {
 function showBoard() {
   renderBoard();
   document.getElementById("vb").style.display = "block";
+  document.getElementById("bni").style.display = "";
   document.getElementById("bni").className = "nbtn";
   document.getElementById("bnb").className = "nbtn on";
+  document.getElementById("nav-sub").style.display = "none";
   document.getElementById("vb").scrollTop = 0;
 }
 function showInput() {
   document.getElementById("vb").style.display = "none";
+  document.getElementById("bni").style.display = "none";
   document.getElementById("bni").className = "nbtn on";
   document.getElementById("bnb").className = "nbtn";
+  document.getElementById("nav-sub").style.display = "";
 }
 
 // =============================================
