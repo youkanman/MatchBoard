@@ -121,9 +121,9 @@
     .bcat  { font-size:13px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:4px 12px; border-radius:6px; }
     .bdate { font-size:13px; color:var(--t2); letter-spacing:1px; }
     .brows { padding:8px 16px; }
-    .brow  { display:flex; align-items:center; justify-content:space-between; padding:8px 4px 2px; border-bottom:1px solid; gap:12px; }
+    .brow  { display:flex; align-items:flex-end; justify-content:space-between; padding:8px 4px 4px; border-bottom:1px solid; gap:12px; }
     .blft  { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
-    .bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; }
+    .bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; align-self:flex-end; padding-bottom:3px; }
     .bmn   { font-size:11px; color:var(--t3); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .bopp  { font-size:15px; font-weight:700; color:var(--t1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .brgt  { display:flex; flex-direction:row; align-items:center; gap:8px; flex-shrink:0; }
@@ -191,8 +191,10 @@
 <!-- ヘッダー -->
 <div class="hdr">
   <div class="bclub" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
-  <div class="app-ttl">MATCH BOARD</div>
-  <div class="app-sub">試合結果入力・試合結果表示</div>
+  <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
+    <div class="app-ttl">MATCH BOARD</div>
+    <div class="app-sub">NO MATCH IS JUST A MATCH</div>
+  </div>
   <div class="nav">
     <button class="nbtn on" id="bni" onclick="showInput()">✏️ 入力</button>
     <button class="nbtn"    id="bnb" onclick="showBoard()">📋 試合結果表示</button>
@@ -232,7 +234,7 @@
   <div id="mlist"></div>
   <button class="addbtn" onclick="addMatch()">＋ 試合を追加</button>
   <div class="sec">
-    <label class="slbl">感謝の一言 <span class="opt">（任意）</span></label>
+    <label class="slbl">感謝の一言</label>
     <input type="text" id="fmsg" placeholder="例：応援ありがとうございました！" oninput="saveData()">
   </div>
   <div class="arow">
@@ -688,7 +690,7 @@ function showInput() {
 // =============================================
 function renderBoard() {
   var title = document.getElementById("ftitle").value;
-  var msg   = document.getElementById("fmsg").value;
+  var msg   = document.getElementById("fmsg").value || "応援ありがとうございました！";
   var fdate = document.getElementById("fdate").value;
   var dateStr = "";
   if (fdate) {
@@ -748,7 +750,7 @@ function renderBoard() {
       var rc = r==="WIN"?"var(--win)":r==="LOSE"?"var(--lose)":r==="DRAW"?"var(--draw)":"var(--t2)";
       var rb = r==="WIN"?"rgba(0,230,118,.12)":r==="LOSE"?"rgba(255,82,82,.12)":r==="DRAW"?"rgba(255,171,64,.12)":"rgba(144,202,249,.1)";
       var bc = r==="WIN"?"rgba(0,230,118,.2)":r==="LOSE"?"rgba(255,82,82,.2)":r==="DRAW"?"rgba(255,171,64,.2)":"rgba(255,255,255,.07)";
-      var nameH = name ? '<div class="bmn">'+esc(name)+'</div>' : "";
+      var nameH = '<div class="bmn">'+( name ? esc(name) : "&nbsp;" )+'</div>';
       var oppH  = opp  ? '<div class="bopp">'+esc("vs "+opp)+'</div>'
                        : '<div class="bopp"><span style="color:var(--t4)">相手未入力</span></div>';
       var rgtH  = tmOn
@@ -759,6 +761,19 @@ function renderBoard() {
       html += '<div class="brow" style="border-color:'+bc+'">'+
                 '<div class="blft"><span class="bidx">'+(i+1)+'</span><div style="min-width:0">'+nameH+oppH+'</div></div>'+
                 '<div class="brgt">'+rgtH+'</div>'+
+              '</div>';
+    }
+    // 4試合未満の場合は空行で高さを確保
+    var cardCount = cards.length;
+    for (var j = cardCount; j < 4; j++) {
+      html += '<div class="brow" style="border-color:rgba(255,255,255,.07)">' +
+                '<div class="blft">' +
+                  '<span class="bidx" style="visibility:hidden">'+(j+1)+'</span>' +
+                  '<div style="min-width:0">' +
+                    '<div class="bmn">&nbsp;</div>' +
+                    '<div class="bopp" style="visibility:hidden">-</div>' +
+                  '</div>' +
+                '</div>' +
               '</div>';
     }
     el.innerHTML = html;
