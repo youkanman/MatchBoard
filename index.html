@@ -28,13 +28,13 @@
     .hdr { background:linear-gradient(135deg,#1a237e 0%,#0d47a1 60%,#1565c0 100%); padding:20px 20px 16px; padding-left:max(20px, env(safe-area-inset-left)); padding-right:max(20px, env(safe-area-inset-right)); position:relative; overflow:hidden; }
     .hdr::before { content:''; position:absolute; top:-30px; right:-30px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); pointer-events:none; }
     /* 結果カードヘッダー（テーマカラー切替） */
-    .bhdr { background:var(--th-hdr); padding:20px 20px 18px; position:relative; overflow:hidden; }
+    .bhdr { background:var(--th-hdr); padding:10px 20px 10px; position:relative; overflow:hidden; }
     .bhdr::before { content:''; position:absolute; top:-20px; right:-20px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.05); }
     .bclub { font-size:11px; letter-spacing:4px; color:var(--t2); text-transform:uppercase; margin-bottom:4px; }
     .app-ttl { font-size:26px; font-weight:900; letter-spacing:1px; color:#fff; line-height:1; }
     .app-sub { font-size:13px; color:var(--bl4); margin-top:4px; }
-    .nav { display:flex; gap:8px; margin-top:14px; }
-    .nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:12px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
+    .nav { display:flex; gap:8px; margin-top:8px; }
+    .nbtn { flex:1; padding:7px 0; border-radius:8px; border:none; font-size:15px; font-weight:700; letter-spacing:1px; background:rgba(255,255,255,0.1); color:var(--t2); transition:all .2s; }
     .nbtn.on { background:#fff; color:var(--bl); }
 
     /* 入力画面 */
@@ -120,10 +120,10 @@
     .bmeta { display:flex; align-items:center; gap:8px; }
     .bcat  { font-size:13px; font-weight:800; letter-spacing:2px; background:rgba(255,255,255,.15); color:#fff; padding:4px 12px; border-radius:6px; }
     .bdate { font-size:13px; color:var(--t2); letter-spacing:1px; }
-    .brows { padding:12px 16px; }
-    .brow  { display:flex; align-items:center; justify-content:space-between; padding:12px 4px; border-bottom:1px solid; gap:12px; }
+    .brows { padding:8px 16px; }
+    .brow  { display:flex; align-items:flex-end; justify-content:space-between; padding:8px 4px 4px; border-bottom:1px solid; gap:12px; }
     .blft  { display:flex; align-items:center; gap:10px; flex:1; min-width:0; }
-    .bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; }
+    .bidx  { font-size:11px; font-weight:800; color:var(--bl3); min-width:18px; letter-spacing:1px; align-self:flex-end; padding-bottom:3px; }
     .bmn   { font-size:11px; color:var(--t3); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .bopp  { font-size:15px; font-weight:700; color:var(--t1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .brgt  { display:flex; flex-direction:row; align-items:center; gap:8px; flex-shrink:0; }
@@ -132,8 +132,8 @@
     .btm   { font-size:11px; font-weight:800; color:var(--draw); background:rgba(255,171,64,.12); padding:4px 10px; border-radius:6px; letter-spacing:1px; }
     .bttl  { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:900; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:0; word-break:break-all; }
     .brsl  { flex-shrink:0; font-size:9px; font-weight:800; letter-spacing:2px; color:#fff; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.35); padding:3px 8px; border-radius:5px; }
-    .bftr  { padding:4px 20px 4px; }
-    .bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:10px 14px; margin-bottom:4px; }
+    .bftr  { padding:1px 20px 10px; }
+    .bmsg  { display:flex; align-items:flex-start; gap:8px; background:rgba(25,118,210,.1); border:1px solid rgba(25,118,210,.2); border-radius:10px; padding:4px 14px; margin-bottom:4px; }
     .bmic  { font-size:14px; flex-shrink:0; margin-top:1px; }
     .bmtx  { font-size:13px; color:#b0bec5; line-height:1.6; font-style:italic; font-family:'Noto Sans JP',sans-serif; }
     .bline { height:1px; background:var(--th-line); margin-bottom:2px; }
@@ -146,8 +146,8 @@
     .hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
 
     /* クラブ設定 */
-    .cfgsec  { margin-top:8px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
-    .cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
+    .cfgsec  { margin-top:0; margin-bottom:18px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
+    .cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:4px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
     .cfgttl  { font-size:13px; font-weight:700; color:var(--t3); letter-spacing:1px; }
     .cfgarw  { font-size:11px; color:var(--t4); transition:transform .2s; }
     .cfgarw.open { transform:rotate(180deg); }
@@ -192,15 +192,30 @@
 <div class="hdr">
   <div class="bclub" id="hdr-club">FC KAMIFUKUOKA THUNDERS</div>
   <div class="app-ttl">MATCH BOARD</div>
-  <div class="app-sub">試合結果入力・試合結果表示</div>
   <div class="nav">
-    <button class="nbtn on" id="bni" onclick="showInput()">✏️ 入力</button>
-    <button class="nbtn"    id="bnb" onclick="showBoard()">📋 試合結果表示</button>
+    <button class="nbtn on" id="bni" onclick="showInput()" style="display:none;">✏️ 入力</button>
+    <div class="app-sub" id="nav-sub" style="flex:1; align-self:flex-end; font-size:18px;">NO MATCH IS JUST A MATCH</div>
+    <button class="nbtn" id="bnb" onclick="showBoard()" style="flex:1;">📋 試合結果表示</button>
   </div>
 </div>
 
 <!-- 入力画面（常にDOMに存在） -->
 <div id="vi">
+  <div class="cfgsec">
+    <div class="cfghdr" onclick="toggleCfg()">
+      <span class="cfgttl">⚙ クラブ設定</span>
+      <span class="cfgarw" id="cfgarw">▼</span>
+    </div>
+    <div class="cfgbdy" id="cfgbdy">
+      <div class="cfglbl">テーマカラー</div>
+      <div class="sw-row" id="cfg-swatches"></div>
+      <div class="cfglbl">ヘッダー表示名</div>
+      <input type="text" id="cfg-hdr" placeholder="例：FC上福岡サンダース" oninput="saveClub()">
+      <div class="cfglbl">フッター表示名</div>
+      <input type="text" id="cfg-ftr" placeholder="例：THUNDERS" oninput="saveClub()">
+      <div class="cfgnote">※ この設定はクリアしても保持されます</div>
+    </div>
+  </div>
   <div class="sec">
     <label class="slbl">大会・イベント名</label>
     <input type="text" id="ftitle" placeholder="例：2025春季リーグ第3節" oninput="saveData()">
@@ -217,27 +232,12 @@
   <div id="mlist"></div>
   <button class="addbtn" onclick="addMatch()">＋ 試合を追加</button>
   <div class="sec">
-    <label class="slbl">感謝の一言 <span class="opt">（任意）</span></label>
+    <label class="slbl">感謝の一言</label>
     <input type="text" id="fmsg" placeholder="例：応援ありがとうございました！" oninput="saveData()">
   </div>
   <div class="arow">
     <button class="clrbtn" onclick="confirmClear()">🗑 クリア</button>
-    <button class="bdbtn"  onclick="showBoard()">📋 試合結果表示 →</button>
-  </div>
-  <div class="cfgsec">
-    <div class="cfghdr" onclick="toggleCfg()">
-      <span class="cfgttl">⚙ クラブ設定</span>
-      <span class="cfgarw" id="cfgarw">▼</span>
-    </div>
-    <div class="cfgbdy" id="cfgbdy">
-      <div class="cfglbl">テーマカラー</div>
-      <div class="sw-row" id="cfg-swatches"></div>
-      <div class="cfglbl">ヘッダー表示名（例：FC上福岡サンダース）</div>
-      <input type="text" id="cfg-hdr" placeholder="FC上福岡サンダース" oninput="saveClub()">
-      <div class="cfglbl">フッター表示名（例：FC KAMIFUKUOKA THUNDERS）</div>
-      <input type="text" id="cfg-ftr" placeholder="FC KAMIFUKUOKA THUNDERS" oninput="saveClub()">
-      <div class="cfgnote">※ この設定はクリアしても保持されます</div>
-    </div>
+    <button class="bdbtn"  onclick="showBoard()">📋 試合結果表示</button>
   </div>
 </div>
 
@@ -321,7 +321,7 @@
 var SK        = "thunders_v4";
 var SK_CLUB   = "club_config";
 var DEF_HDR   = "FC上福岡サンダース";
-var DEF_FTR   = "FC KAMIFUKUOKA THUNDERS";
+var DEF_FTR   = "⚡️ THUNDERS";
 var DEF_THEME = "navy";
 var HALF_MINS = [7,10,15,20,25];
 var DEF_HALF  = 20;
@@ -673,14 +673,18 @@ function renum() {
 function showBoard() {
   renderBoard();
   document.getElementById("vb").style.display = "block";
+  document.getElementById("bni").style.display = "";
   document.getElementById("bni").className = "nbtn";
   document.getElementById("bnb").className = "nbtn on";
+  document.getElementById("nav-sub").style.display = "none";
   document.getElementById("vb").scrollTop = 0;
 }
 function showInput() {
   document.getElementById("vb").style.display = "none";
+  document.getElementById("bni").style.display = "none";
   document.getElementById("bni").className = "nbtn on";
   document.getElementById("bnb").className = "nbtn";
+  document.getElementById("nav-sub").style.display = "";
 }
 
 // =============================================
@@ -688,7 +692,7 @@ function showInput() {
 // =============================================
 function renderBoard() {
   var title = document.getElementById("ftitle").value;
-  var msg   = document.getElementById("fmsg").value;
+  var msg   = document.getElementById("fmsg").value || "応援ありがとうございました！";
   var fdate = document.getElementById("fdate").value;
   var dateStr = "";
   if (fdate) {
@@ -748,7 +752,7 @@ function renderBoard() {
       var rc = r==="WIN"?"var(--win)":r==="LOSE"?"var(--lose)":r==="DRAW"?"var(--draw)":"var(--t2)";
       var rb = r==="WIN"?"rgba(0,230,118,.12)":r==="LOSE"?"rgba(255,82,82,.12)":r==="DRAW"?"rgba(255,171,64,.12)":"rgba(144,202,249,.1)";
       var bc = r==="WIN"?"rgba(0,230,118,.2)":r==="LOSE"?"rgba(255,82,82,.2)":r==="DRAW"?"rgba(255,171,64,.2)":"rgba(255,255,255,.07)";
-      var nameH = name ? '<div class="bmn">'+esc(name)+'</div>' : "";
+      var nameH = '<div class="bmn">'+( name ? esc(name) : "&nbsp;" )+'</div>';
       var oppH  = opp  ? '<div class="bopp">'+esc("vs "+opp)+'</div>'
                        : '<div class="bopp"><span style="color:var(--t4)">相手未入力</span></div>';
       var rgtH  = tmOn
@@ -759,6 +763,19 @@ function renderBoard() {
       html += '<div class="brow" style="border-color:'+bc+'">'+
                 '<div class="blft"><span class="bidx">'+(i+1)+'</span><div style="min-width:0">'+nameH+oppH+'</div></div>'+
                 '<div class="brgt">'+rgtH+'</div>'+
+              '</div>';
+    }
+    // 4試合未満の場合は空行で高さを確保
+    var cardCount = cards.length;
+    for (var j = cardCount; j < 4; j++) {
+      html += '<div class="brow" style="border-color:rgba(255,255,255,.07)">' +
+                '<div class="blft">' +
+                  '<span class="bidx" style="visibility:hidden">'+(j+1)+'</span>' +
+                  '<div style="min-width:0">' +
+                    '<div class="bmn">&nbsp;</div>' +
+                    '<div class="bopp" style="visibility:hidden">-</div>' +
+                  '</div>' +
+                '</div>' +
               '</div>';
     }
     el.innerHTML = html;
@@ -779,12 +796,22 @@ async function saveImage(mode) {
   var origText = btn.textContent;
   btn.textContent = "⏳ 生成中...";
   try {
-    var canvas = await html2canvas(document.getElementById("bcard"), {
-      backgroundColor:"#0a1020", scale:2, useCORS:true, logging:false
+    // 出力幅1080pxに合わせてscaleを計算
+    var bcardEl = document.getElementById("bcard");
+    var displayW = bcardEl.offsetWidth;
+    var targetW  = 1080;
+    var scaleVal = targetW / displayW;
+
+    var srcCanvas = await html2canvas(bcardEl, {
+      backgroundColor:"#0a1020", scale:scaleVal, useCORS:true, logging:false
     });
-    canvas.toBlob(async function(blob) {
+
+    srcCanvas.toBlob(async function(blob) {
+      var fdate = document.getElementById("fdate").value || new Date().toISOString().slice(0,10);
+      var dateStr = fdate.replace(/-/g, "");
+      var fname = "matchboard_" + category + "_" + dateStr + ".png";
       if (mode === "share") {
-        var file = new File([blob], "thunders_match.png", {type:"image/png"});
+        var file = new File([blob], fname, {type:"image/png"});
         if (navigator.canShare && navigator.canShare({files:[file]})) {
           await navigator.share({files:[file], title:"試合結果"});
         } else {
@@ -793,9 +820,7 @@ async function saveImage(mode) {
       } else {
         var a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        var fdate = document.getElementById("fdate").value || new Date().toISOString().slice(0,10);
-        var dateStr = fdate.replace(/-/g, "");
-        a.download = "matchboard_" + category + "_" + dateStr + ".png";
+        a.download = fname;
         a.click();
         URL.revokeObjectURL(a.href);
       }
