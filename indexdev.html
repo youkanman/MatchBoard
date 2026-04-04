@@ -146,8 +146,8 @@
     .hint { text-align:center; margin-top:10px; font-size:12px; color:var(--t4); }
 
     /* クラブ設定 */
-    .cfgsec  { margin-top:8px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
-    .cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
+    .cfgsec  { margin-top:0; margin-bottom:18px; border:1px solid rgba(255,255,255,.08); border-radius:12px; overflow:hidden; }
+    .cfghdr  { display:flex; align-items:center; justify-content:space-between; padding:4px 16px; cursor:pointer; background:rgba(255,255,255,.03); user-select:none; }
     .cfgttl  { font-size:13px; font-weight:700; color:var(--t3); letter-spacing:1px; }
     .cfgarw  { font-size:11px; color:var(--t4); transition:transform .2s; }
     .cfgarw.open { transform:rotate(180deg); }
@@ -201,6 +201,21 @@
 
 <!-- 入力画面（常にDOMに存在） -->
 <div id="vi">
+  <div class="cfgsec">
+    <div class="cfghdr" onclick="toggleCfg()">
+      <span class="cfgttl">⚙ クラブ設定</span>
+      <span class="cfgarw" id="cfgarw">▼</span>
+    </div>
+    <div class="cfgbdy" id="cfgbdy">
+      <div class="cfglbl">テーマカラー</div>
+      <div class="sw-row" id="cfg-swatches"></div>
+      <div class="cfglbl">ヘッダー表示名</div>
+      <input type="text" id="cfg-hdr" placeholder="例：FC上福岡サンダース" oninput="saveClub()">
+      <div class="cfglbl">フッター表示名</div>
+      <input type="text" id="cfg-ftr" placeholder="例：THUNDERS" oninput="saveClub()">
+      <div class="cfgnote">※ この設定はクリアしても保持されます</div>
+    </div>
+  </div>
   <div class="sec">
     <label class="slbl">大会・イベント名</label>
     <input type="text" id="ftitle" placeholder="例：2025春季リーグ第3節" oninput="saveData()">
@@ -223,21 +238,6 @@
   <div class="arow">
     <button class="clrbtn" onclick="confirmClear()">🗑 クリア</button>
     <button class="bdbtn"  onclick="showBoard()">📋 試合結果表示 →</button>
-  </div>
-  <div class="cfgsec">
-    <div class="cfghdr" onclick="toggleCfg()">
-      <span class="cfgttl">⚙ クラブ設定</span>
-      <span class="cfgarw" id="cfgarw">▼</span>
-    </div>
-    <div class="cfgbdy" id="cfgbdy">
-      <div class="cfglbl">テーマカラー</div>
-      <div class="sw-row" id="cfg-swatches"></div>
-      <div class="cfglbl">ヘッダー表示名（例：FC上福岡サンダース）</div>
-      <input type="text" id="cfg-hdr" placeholder="FC上福岡サンダース" oninput="saveClub()">
-      <div class="cfglbl">フッター表示名（例：FC KAMIFUKUOKA THUNDERS）</div>
-      <input type="text" id="cfg-ftr" placeholder="FC KAMIFUKUOKA THUNDERS" oninput="saveClub()">
-      <div class="cfgnote">※ この設定はクリアしても保持されます</div>
-    </div>
   </div>
 </div>
 
@@ -321,7 +321,7 @@
 var SK        = "thunders_v4";
 var SK_CLUB   = "club_config";
 var DEF_HDR   = "FC上福岡サンダース";
-var DEF_FTR   = "FC KAMIFUKUOKA THUNDERS";
+var DEF_FTR   = "⚡️ THUNDERS";
 var DEF_THEME = "navy";
 var HALF_MINS = [7,10,15,20,25];
 var DEF_HALF  = 20;
