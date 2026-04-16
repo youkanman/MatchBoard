@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>懇親会 くじ引き</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f14;
+    --surface: #1a1a24;
+    --border: #2a2a3a;
+    --accent-a: #ff6b35;
+    --accent-b: #3b82f6;
+    --text: #f0f0f5;
+    --text-dim: #888899;
+    --success: #22c55e;
+    --radius: 16px;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘Zen Kaku Gothic New’, sans-serif;
+background: var(–bg);
+color: var(–text);
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 20px;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background:
+radial-gradient(ellipse at 20% 20%, rgba(255,107,53,0.08) 0%, transparent 60%),
+radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.08) 0%, transparent 60%);
+pointer-events: none;
+z-index: 0;
+}
+
+.app {
+position: relative;
+z-index: 1;
+width: 100%;
+max-width: 420px;
+}
+
+/* ─── ヘッダー ─── */
+.header {
+text-align: center;
+margin-bottom: 28px;
+}
+.header-company {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.1rem;
+letter-spacing: 0.15em;
+background: linear-gradient(135deg, var(–accent-a), var(–accent-b));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+min-height: 1.4em;
+}
+.header-dept {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.9rem;
+letter-spacing: 0.12em;
+background: linear-gradient(135deg, var(–accent-a), var(–accent-b));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+line-height: 1.1;
+min-height: 1.2em;
+}
+.header-event {
+font-size: 0.82rem;
+color: var(–text-dim);
+margin-top: 6px;
+letter-spacing: 0.1em;
+min-height: 1.2em;
+}
+
+/* ─── カード ─── */
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 28px 24px;
+margin-bottom: 16px;
+}
+
+/* ─── 残り枠インジケーター ─── */
+.rooms-bar {
+display: flex;
+gap: 12px;
+margin-bottom: 28px;
+}
+.room-badge {
+flex: 1;
+border-radius: 12px;
+padding: 14px 12px;
+text-align: center;
+border: 2px solid transparent;
+transition: all 0.3s;
+}
+.room-badge.room-a {
+background: rgba(255,107,53,0.1);
+border-color: rgba(255,107,53,0.3);
+}
+.room-badge.room-b {
+background: rgba(59,130,246,0.1);
+border-color: rgba(59,130,246,0.3);
+}
+.room-badge.full {
+opacity: 0.4;
+}
+.room-badge .room-name {
+font-size: 0.75rem;
+font-weight: 700;
+letter-spacing: 0.1em;
+color: var(–text-dim);
+margin-bottom: 4px;
+}
+.room-badge.room-a .room-name { color: var(–accent-a); }
+.room-badge.room-b .room-name { color: var(–accent-b); }
+.room-badge .room-count {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 2rem;
+line-height: 1;
+}
+.room-badge.room-a .room-count { color: var(–accent-a); }
+.room-badge.room-b .room-count { color: var(–accent-b); }
+.room-badge .room-label {
+font-size: 0.7rem;
+color: var(–text-dim);
+margin-top: 2px;
+}
+.full-badge {
+display: inline-block;
+font-size: 0.6rem;
+font-weight: 700;
+color: #fff;
+background: #444;
+border-radius: 4px;
+padding: 1px 5px;
+margin-top: 4px;
+letter-spacing: 0.05em;
+}
+
+/* ─── 進捗バー ─── */
+.progress-wrap {
+margin-bottom: 28px;
+}
+.progress-label {
+display: flex;
+justify-content: space-between;
+font-size: 0.75rem;
+color: var(–text-dim);
+margin-bottom: 8px;
+}
+.progress-bar {
+height: 6px;
+background: var(–border);
+border-radius: 99px;
+overflow: hidden;
+}
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–accent-a), var(–accent-b));
+border-radius: 99px;
+transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ─── くじボタン ─── */
+.lot-btn {
+width: 100%;
+padding: 22px;
+border: none;
+border-radius: var(–radius);
+font-family: ‘Zen Kaku Gothic New’, sans-serif;
+font-size: 1.3rem;
+font-weight: 900;
+cursor: pointer;
+letter-spacing: 0.06em;
+position: relative;
+overflow: hidden;
+transition: transform 0.15s, box-shadow 0.15s;
+background: linear-gradient(135deg, #ff6b35, #ff9500);
+color: #fff;
+box-shadow: 0 4px 24px rgba(255,107,53,0.35);
+}
+.lot-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,107,53,0.45); }
+.lot-btn:active { transform: translateY(0); }
+.lot-btn::after {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+border-radius: inherit;
+}
+.lot-btn:disabled {
+background: var(–border);
+color: var(–text-dim);
+cursor: not-allowed;
+box-shadow: none;
+transform: none;
+}
+.lot-btn.next-mode {
+background: transparent;
+border: 2px solid var(–border);
+color: var(–text);
+box-shadow: none;
+}
+.lot-btn.next-mode:hover {
+border-color: var(–accent-b);
+color: var(–accent-b);
+box-shadow: none;
+}
+
+/* ─── 待機・結果 共通ステージ ─── */
+.lot-stage {
+text-align: center;
+}
+.stage-label {
+font-size: 0.82rem;
+color: var(–text-dim);
+letter-spacing: 0.1em;
+height: 1.4em;
+margin-bottom: 12px;
+}
+.stage-main {
+height: 90px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 10px;
+}
+.stage-sub {
+font-size: 0.92rem;
+font-weight: 700;
+color: var(–text);
+height: 2.4em;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 20px;
+}
+.result-room {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 5rem;
+line-height: 1;
+letter-spacing: 0.05em;
+}
+.result-room.room-a { color: var(–accent-a); text-shadow: 0 0 40px rgba(255,107,53,0.5); }
+.result-room.room-b { color: var(–accent-b); text-shadow: 0 0 40px rgba(59,130,246,0.5); }
+@keyframes popIn {
+from { transform: scale(0.5); opacity: 0; }
+to { transform: scale(1); opacity: 1; }
+}
+
+/* ─── 完了画面 ─── */
+.complete-screen {
+text-align: center;
+padding: 16px 0;
+}
+.complete-icon {
+font-size: 3rem;
+margin-bottom: 12px;
+animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.complete-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 2rem;
+letter-spacing: 0.1em;
+color: var(–success);
+margin-bottom: 8px;
+}
+.complete-sub {
+font-size: 0.85rem;
+color: var(–text-dim);
+margin-bottom: 24px;
+}
+
+/* ─── 結果サマリー ─── */
+.summary-title {
+font-size: 0.75rem;
+font-weight: 700;
+color: var(–text-dim);
+letter-spacing: 0.1em;
+margin-bottom: 12px;
+text-transform: uppercase;
+}
+.summary-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-bottom: 20px;
+}
+.summary-col {
+background: var(–bg);
+border-radius: 10px;
+padding: 12px;
+}
+.summary-col-title {
+font-size: 0.7rem;
+font-weight: 700;
+letter-spacing: 0.08em;
+margin-bottom: 8px;
+}
+.summary-col.col-a .summary-col-title { color: var(–accent-a); }
+.summary-col.col-b .summary-col-title { color: var(–accent-b); }
+.summary-nums {
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+}
+.num-chip {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 0.85rem;
+padding: 3px 8px;
+border-radius: 6px;
+letter-spacing: 0.05em;
+}
+.col-a .num-chip { background: rgba(255,107,53,0.15); color: var(–accent-a); }
+.col-b .num-chip { background: rgba(59,130,246,0.15); color: var(–accent-b); }
+
+/* ─── リセット・設定ボタン ─── */
+.action-row {
+display: flex;
+gap: 10px;
+}
+.action-btn {
+flex: 1;
+padding: 14px;
+border: 1px solid var(–border);
+border-radius: 10px;
+font-family: ‘Zen Kaku Gothic New’, sans-serif;
+font-size: 0.85rem;
+font-weight: 700;
+cursor: pointer;
+background: transparent;
+color: var(–text-dim);
+letter-spacing: 0.05em;
+transition: all 0.2s;
+}
+.action-btn:hover { border-color: var(–text-dim); color: var(–text); }
+.action-btn.danger:hover { border-color: #ef4444; color: #ef4444; }
+
+/* ─── 設定モーダル ─── */
+.modal-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.7);
+backdrop-filter: blur(4px);
+z-index: 100;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.2s;
+}
+.modal-overlay.open {
+opacity: 1;
+pointer-events: all;
+}
+.modal {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 28px 24px;
+width: 100%;
+max-width: 380px;
+max-height: 90vh;
+overflow-y: auto;
+transform: translateY(20px);
+transition: transform 0.2s;
+}
+.modal-overlay.open .modal {
+transform: translateY(0);
+}
+.modal-title {
+font-size: 1rem;
+font-weight: 900;
+letter-spacing: 0.06em;
+margin-bottom: 20px;
+}
+.field {
+margin-bottom: 16px;
+}
+.field label {
+display: block;
+font-size: 0.75rem;
+font-weight: 700;
+color: var(–text-dim);
+letter-spacing: 0.08em;
+margin-bottom: 6px;
+}
+.field input {
+width: 100%;
+padding: 12px 14px;
+background: var(–bg);
+border: 1px solid var(–border);
+border-radius: 10px;
+color: var(–text);
+font-family: ‘Zen Kaku Gothic New’, sans-serif;
+font-size: 1rem;
+outline: none;
+transition: border-color 0.2s;
+}
+.field input:focus { border-color: var(–accent-b); }
+.field-section-label {
+font-size: 0.7rem;
+font-weight: 700;
+letter-spacing: 0.12em;
+color: var(–accent-b);
+margin-bottom: 10px;
+margin-top: 4px;
+text-transform: uppercase;
+}
+.modal-note {
+font-size: 0.72rem;
+color: var(–text-dim);
+background: rgba(255,107,53,0.08);
+border: 1px solid rgba(255,107,53,0.2);
+border-radius: 8px;
+padding: 10px 12px;
+margin-bottom: 20px;
+line-height: 1.5;
+}
+.modal-btns {
+display: flex;
+gap: 10px;
+}
+.btn-cancel {
+flex: 1;
+padding: 14px;
+border: 1px solid var(–border);
+border-radius: 10px;
+font-family: ‘Zen Kaku Gothic New’, sans-serif;
+font-size: 0.9rem;
+font-weight: 700;
+cursor: pointer;
+background: transparent;
+color: var(–text-dim);
+transition: all 0.2s;
+}
+.btn-cancel:hover { border-color: var(–text-dim); color: var(–text); }
+.btn-save {
+flex: 1;
+padding: 14px;
+border: none;
+border-radius: 10px;
+font-family: ‘Zen Kaku Gothic New’, sans-serif;
+font-size: 0.9rem;
+font-weight: 900;
+cursor: pointer;
+background: linear-gradient(135deg, var(–accent-b), #6366f1);
+color: #fff;
+transition: opacity 0.2s;
+}
+.btn-save:hover { opacity: 0.9; }
+
+/* ─── くじ演出 ─── */
+.rolling {
+animation: rolling 0.6s ease-in-out;
+}
+@keyframes rolling {
+0%   { transform: rotateY(0deg); opacity: 1; }
+50%  { transform: rotateY(90deg); opacity: 0.3; }
+100% { transform: rotateY(0deg); opacity: 1; }
+}
+
+/* ─── 満員警告 ─── */
+.auto-note {
+font-size: 0.75rem;
+color: var(–accent-a);
+text-align: center;
+padding: 8px;
+background: rgba(255,107,53,0.08);
+border-radius: 8px;
+margin-top: 12px;
+display: none;
+}
+.auto-note.show { display: block; }
+
+/* ─── 待機: 何人目か ─── */
+.standby-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 4.5rem;
+line-height: 1;
+color: var(–text-dim);
+letter-spacing: 0.05em;
+}
+</style>
+
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-company" id="headerCompany"></div>
+    <div class="header-dept" id="headerDept"></div>
+    <div class="header-event" id="headerEvent"></div>
+  </div>
+
+  <!-- メインカード -->
+
+  <div class="card" id="mainCard">
+
+```
+<!-- 部屋インジケーター -->
+<div class="rooms-bar">
+  <div class="room-badge room-a" id="badgeA">
+    <div class="room-name" id="nameA">A 部屋</div>
+    <div class="room-count" id="remainA">14</div>
+    <div class="room-label">残り</div>
+  </div>
+  <div class="room-badge room-b" id="badgeB">
+    <div class="room-name" id="nameB">B 部屋</div>
+    <div class="room-count" id="remainB">30</div>
+    <div class="room-label">残り</div>
+  </div>
+</div>
+
+<!-- 進捗 -->
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>進捗</span>
+    <span id="progressText">0 / 44 名</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- 待機・結果 共通ラッパー（固定高さ） -->
+<div class="lot-stage">
+  <!-- ラベル行（両画面共通位置） -->
+  <div class="stage-label" id="stageLabel">次の方はタップしてください</div>
+
+  <!-- メイン表示エリア（固定高さ） -->
+  <div class="stage-main">
+    <!-- 待機時: 何人目か -->
+    <div class="standby-num" id="standbyNum"></div>
+    <!-- 結果時: 部屋名 -->
+    <div class="result-room" id="resultRoom" style="display:none;"></div>
+  </div>
+
+  <!-- サブテキスト -->
+  <div class="stage-sub" id="stageSub"></div>
+
+  <!-- ボタン（共通位置） -->
+  <button class="lot-btn" id="lotBtn" onclick="drawLot()">🎲 くじを引く</button>
+  <div class="auto-note" id="autoNote"></div>
+</div>
+
+<!-- 完了画面 -->
+<div id="completeScreen" style="display:none;">
+  <div class="complete-screen">
+    <div class="complete-icon">🎊</div>
+    <div class="complete-title">COMPLETE!</div>
+    <div class="complete-sub">全員の振り分けが完了しました</div>
+    <div class="summary-title">振り分け結果</div>
+    <div class="summary-grid">
+      <div class="summary-col col-a">
+        <div class="summary-col-title" id="summaryNameA">A 部屋</div>
+        <div class="summary-nums" id="summaryNumsA"></div>
+      </div>
+      <div class="summary-col col-b">
+        <div class="summary-col-title" id="summaryNameB">B 部屋</div>
+        <div class="summary-nums" id="summaryNumsB"></div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </div><!-- /.card -->
+
+  <!-- アクションボタン -->
+
+  <div class="action-row">
+    <button class="action-btn" onclick="openSettings()">⚙ 設定</button>
+    <button class="action-btn danger" id="resetBtn" onclick="showResetConfirm()">↺ リセット</button>
+  </div>
+
+  <!-- インライン確認 -->
+
+  <div id="resetConfirm" style="display:none; margin-top:10px;">
+    <div class="card" style="padding:16px 20px; border-color:#ef444460; text-align:center;">
+      <div style="font-size:0.85rem; color:#f87171; font-weight:700; margin-bottom:14px;">本当にリセットしますか？<br><span style="font-size:0.75rem; color:var(--text-dim); font-weight:400;">振り分け結果がすべて消えます</span></div>
+      <div style="display:flex; gap:10px;">
+        <button class="action-btn" onclick="hideResetConfirm()" style="flex:1;">キャンセル</button>
+        <button class="action-btn danger" onclick="doReset()" style="flex:1; border-color:#ef4444; color:#ef4444;">リセット実行</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 設定モーダル -->
+
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-title">⚙ 設定</div>
+    <div class="field-section-label">ヘッダー表示</div>
+    <div class="field">
+      <label>会社名</label>
+      <input type="text" id="setCompany" placeholder="例：○○株式会社">
+    </div>
+    <div class="field">
+      <label>部署名</label>
+      <input type="text" id="setDept" placeholder="例：システム開発部">
+    </div>
+    <div class="field">
+      <label>会の名前</label>
+      <input type="text" id="setEvent" placeholder="例：2025年度 懇親会">
+    </div>
+    <div class="field-section-label" style="margin-top:8px;">部屋設定</div>
+    <div class="field">
+      <label>A 部屋の名前</label>
+      <input type="text" id="setNameA" value="A 部屋">
+    </div>
+    <div class="field">
+      <label>A 部屋の定員</label>
+      <input type="number" id="setCapA" value="14" min="1" max="200">
+    </div>
+    <div class="field">
+      <label>B 部屋の名前</label>
+      <input type="text" id="setNameB" value="B 部屋">
+    </div>
+    <div class="field">
+      <label>B 部屋の定員</label>
+      <input type="number" id="setCapB" value="30" min="1" max="200">
+    </div>
+    <div class="modal-note">
+      ⚠ 部屋設定を変更するとくじをリセットします
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeSettings()">キャンセル</button>
+      <button class="btn-save" onclick="saveSettings()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+const STORAGE_KEY = 'lottery_state_v1';
+
+function defaultState() {
+  return {
+    company: '',
+    dept: '',
+    event: '',
+    nameA: 'A 部屋',
+    capA: 14,
+    nameB: 'B 部屋',
+    capB: 30,
+    countA: 0,
+    countB: 0,
+    drawn: 0,
+    results: [],
+    phase: 'standby',
+    lastResult: null,
+  };
+}
+
+let state = loadState();
+
+function loadState() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    return s ? JSON.parse(s) : defaultState();
+  } catch { return defaultState(); }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ─── Logic ───────────────────────────────────────────────
+function totalCap() { return state.capA + state.capB; }
+
+function drawLot() {
+  const total = totalCap();
+  if (state.drawn >= total) return;
+
+  const remainA = state.capA - state.countA;
+  const remainB = state.capB - state.countB;
+
+  let result;
+  if (remainA <= 0) {
+    result = 'B';
+  } else if (remainB <= 0) {
+    result = 'A';
+  } else {
+    // 残り枠比率でランダム
+    const rand = Math.random();
+    result = rand < remainA / (remainA + remainB) ? 'A' : 'B';
+  }
+
+  if (result === 'A') state.countA++;
+  else state.countB++;
+
+  state.drawn++;
+  state.results.push(result);
+  state.lastResult = result;
+  state.phase = 'result';
+  saveState();
+  render();
+}
+
+function goNext() {
+  const total = totalCap();
+  if (state.drawn >= total) {
+    state.phase = 'complete';
+  } else {
+    state.phase = 'standby';
+  }
+  saveState();
+  render();
+}
+
+function reset() {
+  const { company, dept, event, nameA, capA, nameB, capB } = state;
+  state = defaultState();
+  state.company = company;
+  state.dept = dept;
+  state.event = event;
+  state.nameA = nameA;
+  state.capA = capA;
+  state.nameB = nameB;
+  state.capB = capB;
+  state.phase = 'standby';
+  saveState();
+  render();
+}
+
+// ─── Render ──────────────────────────────────────────────
+function render() {
+  const total = totalCap();
+  const remainA = state.capA - state.countA;
+  const remainB = state.capB - state.countB;
+
+  // ヘッダー
+  document.getElementById('headerCompany').textContent = state.company || '';
+  document.getElementById('headerDept').textContent = state.dept || '';
+  document.getElementById('headerEvent').textContent = state.event || '';
+
+  // 部屋バッジ
+  document.getElementById('nameA').textContent = state.nameA;
+  document.getElementById('nameB').textContent = state.nameB;
+  document.getElementById('remainA').textContent = remainA;
+  document.getElementById('remainB').textContent = remainB;
+
+  const badgeA = document.getElementById('badgeA');
+  const badgeB = document.getElementById('badgeB');
+  badgeA.classList.toggle('full', remainA <= 0);
+  badgeB.classList.toggle('full', remainB <= 0);
+
+  // 満員表示
+  const existingFull = badgeA.querySelector('.full-badge');
+  if (existingFull) existingFull.remove();
+  const existingFullB = badgeB.querySelector('.full-badge');
+  if (existingFullB) existingFullB.remove();
+  if (remainA <= 0) {
+    const fb = document.createElement('div');
+    fb.className = 'full-badge';
+    fb.textContent = 'FULL';
+    badgeA.appendChild(fb);
+  }
+  if (remainB <= 0) {
+    const fb = document.createElement('div');
+    fb.className = 'full-badge';
+    fb.textContent = 'FULL';
+    badgeB.appendChild(fb);
+  }
+
+  // 進捗
+  const pct = total > 0 ? (state.drawn / total * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${state.drawn} / ${total} 名`;
+
+  // 画面切替
+  const complete = document.getElementById('completeScreen');
+  const lotStage = document.querySelector('.lot-stage');
+
+  if (state.phase === 'complete') {
+    complete.style.display = 'block';
+    lotStage.style.display = 'none';
+    renderComplete();
+  } else {
+    complete.style.display = 'none';
+    lotStage.style.display = 'block';
+    if (state.phase === 'result') {
+      renderResult();
+    } else {
+      renderStandby();
+    }
+  }
+}
+
+function renderStandby() {
+  const total = totalCap();
+  const next = state.drawn + 1;
+  const remainA = state.capA - state.countA;
+  const remainB = state.capB - state.countB;
+
+  // ラベル
+  document.getElementById('stageLabel').textContent = 'スマホを渡してタップしてください';
+
+  // メイン: 何人目か表示、部屋名を隠す
+  const numEl = document.getElementById('standbyNum');
+  const roomEl = document.getElementById('resultRoom');
+  numEl.textContent = total > 0 ? `${next}` : '';
+  numEl.style.display = '';
+  roomEl.style.display = 'none';
+
+  // サブテキスト
+  document.getElementById('stageSub').textContent = total > 0 ? `${next} 人目` : '';
+
+  // ボタンを「くじを引く」に戻す
+  const btn = document.getElementById('lotBtn');
+  btn.textContent = '🎲 くじを引く';
+  btn.onclick = drawLot;
+  btn.disabled = state.drawn >= total;
+  btn.className = 'lot-btn';
+
+  const autoNote = document.getElementById('autoNote');
+  if (remainA <= 0) {
+    autoNote.textContent = `${state.nameA}は満員のため、全員${state.nameB}になります`;
+    autoNote.classList.add('show');
+  } else if (remainB <= 0) {
+    autoNote.textContent = `${state.nameB}は満員のため、全員${state.nameA}になります`;
+    autoNote.classList.add('show');
+  } else {
+    autoNote.classList.remove('show');
+  }
+}
+
+function renderResult() {
+  const res = state.lastResult;
+  const name = res === 'A' ? state.nameA : state.nameB;
+
+  // ラベル
+  document.getElementById('stageLabel').textContent = 'あなたの部屋は…';
+
+  // メイン: 部屋名表示、番号を隠す
+  const roomEl = document.getElementById('resultRoom');
+  const numEl = document.getElementById('standbyNum');
+  numEl.style.display = 'none';
+  roomEl.style.display = '';
+  roomEl.textContent = name;
+  roomEl.className = 'result-room ' + (res === 'A' ? 'room-a' : 'room-b');
+
+  // ポップアニメ再トリガー
+  roomEl.style.animation = 'none';
+  roomEl.offsetHeight;
+  roomEl.style.animation = 'popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+
+  // サブ
+  document.getElementById('stageSub').textContent = `${name}へどうぞ！`;
+
+  // ボタンを「次の方へ」に変える
+  const btn = document.getElementById('lotBtn');
+  btn.textContent = '次の方へ →';
+  btn.onclick = goNext;
+  btn.disabled = false;
+  btn.className = 'lot-btn next-mode';
+
+  document.getElementById('autoNote').classList.remove('show');
+}
+
+function renderComplete() {
+  document.getElementById('summaryNameA').textContent = state.nameA;
+  document.getElementById('summaryNameB').textContent = state.nameB;
+
+  const numsA = [];
+  const numsB = [];
+  state.results.forEach((r, i) => {
+    if (r === 'A') numsA.push(i + 1);
+    else numsB.push(i + 1);
+  });
+
+  const toChips = (nums, col) =>
+    nums.map(n => `<span class="num-chip">${n}</span>`).join('');
+
+  document.getElementById('summaryNumsA').innerHTML = toChips(numsA, 'a');
+  document.getElementById('summaryNumsB').innerHTML = toChips(numsB, 'b');
+}
+
+// ─── Settings ────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('setCompany').value = state.company || '';
+  document.getElementById('setDept').value = state.dept || '';
+  document.getElementById('setEvent').value = state.event || '';
+  document.getElementById('setNameA').value = state.nameA;
+  document.getElementById('setCapA').value = state.capA;
+  document.getElementById('setNameB').value = state.nameB;
+  document.getElementById('setCapB').value = state.capB;
+  document.getElementById('settingsModal').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('open');
+}
+
+function saveSettings() {
+  const company = document.getElementById('setCompany').value.trim();
+  const dept = document.getElementById('setDept').value.trim();
+  const event = document.getElementById('setEvent').value.trim();
+  const nameA = document.getElementById('setNameA').value.trim() || 'A 部屋';
+  const capA = parseInt(document.getElementById('setCapA').value) || 14;
+  const nameB = document.getElementById('setNameB').value.trim() || 'B 部屋';
+  const capB = parseInt(document.getElementById('setCapB').value) || 30;
+
+  // 部屋設定が変わった場合のみくじをリセット
+  const roomChanged = nameA !== state.nameA || capA !== state.capA ||
+                      nameB !== state.nameB || capB !== state.capB;
+  if (roomChanged) {
+    state = defaultState();
+  }
+  state.company = company;
+  state.dept = dept;
+  state.event = event;
+  state.nameA = nameA;
+  state.capA = capA;
+  state.nameB = nameB;
+  state.capB = capB;
+  saveState();
+  closeSettings();
+  render();
+}
+
+function showResetConfirm() {
+  document.getElementById('resetConfirm').style.display = 'block';
+  document.getElementById('resetBtn').style.display = 'none';
+}
+
+function hideResetConfirm() {
+  document.getElementById('resetConfirm').style.display = 'none';
+  document.getElementById('resetBtn').style.display = '';
+}
+
+function doReset() {
+  hideResetConfirm();
+  reset();
+}
+
+// ─── 設定モーダル背景クリックで閉じる ─────────────────────
+document.getElementById('settingsModal').addEventListener('click', function(e) {
+  if (e.target === this) closeSettings();
+});
+
+// ─── Init ────────────────────────────────────────────────
+render();
+</script>
+
+</body>
+</html>
